@@ -1,0 +1,2616 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>玉夜稲荷 — 타마요 이나리 신사 縁起</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&family=Cinzel:wght@500;700&family=Noto+Serif+JP:wght@400;700;900&family=Klee+One:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ================================================
+   디자인 토큰 (낮)
+================================================ */
+:root{
+  --bg: #f4ede0;
+  --bg-2: #ebe0c9;
+  --paper: #fbf6e9;
+  --ink: #1a1614;
+  --ink-soft: #4a3f36;
+  --vermilion: #c0392b;
+  --vermilion-deep: #8b1e14;
+  --vermilion-bright: #e74c3c;
+  --gold: #b08841;
+  --gold-soft: #d4b275;
+  --gold-bright: #e8c878;
+  --indigo: #2b3658;
+  --moss: #5b6b3e;
+  --line: rgba(26,22,20,0.18);
+  --shadow: rgba(60,40,20,0.18);
+  --glow: rgba(192,57,43,0.4);
+
+  --f-display: "Shippori Mincho", "Noto Serif JP", serif;
+  --f-body: "Zen Kaku Gothic New", system-ui, sans-serif;
+  --f-mono: "Cinzel", serif;
+  --f-hand: "Klee One", "Shippori Mincho", serif;
+}
+
+/* 밤 */
+body.night{
+  --bg: #0e1020;
+  --bg-2: #161a36;
+  --paper: #1a1d36;
+  --ink: #f3ecd9;
+  --ink-soft: #b9b0a0;
+  --vermilion: #ff6b5b;
+  --vermilion-deep: #d94a3a;
+  --vermilion-bright: #ff8b7a;
+  --gold: #e7c97a;
+  --gold-soft: #c9a85a;
+  --gold-bright: #f5d98f;
+  --indigo: #6e7bb6;
+  --moss: #9ab074;
+  --line: rgba(243,236,217,0.14);
+  --shadow: rgba(0,0,0,0.6);
+  --glow: rgba(255,107,91,0.5);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+html,body{background:var(--bg);color:var(--ink);font-family:var(--f-body);overflow-x:hidden}
+body{transition:background .8s ease, color .8s ease; cursor:none}
+a, button, .clickable{cursor:none}
+
+/* 화지(和紙) 질감 */
+body::before{
+  content:"";
+  position:fixed;inset:0;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(176,136,65,.06), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(192,57,43,.05), transparent 45%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.85' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .12 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+  pointer-events:none;z-index:1;opacity:.55;
+  transition:opacity .8s ease;
+}
+body.night::before{opacity:.7}
+
+/* 세이가이하(青海波) 패턴 디바이더 — 동양미 포인트 */
+.seigaiha{
+  height:60px;
+  background-image: radial-gradient(circle at 50% 100%, transparent 18px, var(--vermilion) 18px, var(--vermilion) 19px, transparent 19px),
+                    radial-gradient(circle at 0 100%, transparent 18px, var(--vermilion) 18px, var(--vermilion) 19px, transparent 19px),
+                    radial-gradient(circle at 100% 100%, transparent 18px, var(--vermilion) 18px, var(--vermilion) 19px, transparent 19px);
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 0, -20px 0;
+  background-repeat: repeat-x;
+  opacity:.25;
+  position:relative;z-index:2;
+}
+body.night .seigaiha{opacity:.35}
+
+/* ================================================
+   커스텀 커서 — 도리이 + 여우불꽃
+================================================ */
+.cursor-main{
+  position:fixed;width:24px;height:24px;
+  pointer-events:none;z-index:99999;
+  transform:translate(-50%,-50%);
+  transition:width .3s, height .3s, background .3s;
+  mix-blend-mode:difference;
+}
+.cursor-main::before{
+  content:"";position:absolute;inset:0;
+  border:1.5px solid var(--vermilion);border-radius:50%;
+  background:rgba(192,57,43,.1);
+}
+.cursor-trail{
+  position:fixed;width:6px;height:6px;
+  border-radius:50%;
+  background:var(--vermilion);
+  pointer-events:none;z-index:99998;
+  transform:translate(-50%,-50%);
+  box-shadow:0 0 12px var(--vermilion), 0 0 20px var(--gold);
+  transition:transform .4s ease;
+}
+.cursor-main.hover{width:50px;height:50px}
+.cursor-main.hover::before{background:rgba(192,57,43,.2);border-width:2px}
+
+/* ================================================
+   로딩 화면
+================================================ */
+#loader{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:1.8rem;
+  padding:2rem 1rem;
+  transition:opacity 1.2s ease, visibility 1.2s ease;
+  overflow-y:auto;
+}
+#loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+
+/* 로더 배경 한자 워터마크 */
+#loader::before{
+  content:"境 界 之 神 社 ・ 玉 夜 稲 荷";
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) rotate(-90deg);
+  white-space:nowrap;
+  font-family:var(--f-display);font-size:14rem;font-weight:800;
+  color:var(--ink);opacity:.04;letter-spacing:.5em;
+  pointer-events:none;
+}
+
+.torii-wrap{position:relative;width:340px;height:300px;display:flex;align-items:center;justify-content:center;z-index:2}
+.torii-wrap svg{width:100%;height:100%;filter:drop-shadow(0 8px 24px var(--glow))}
+.torii-wrap svg .torii-stroke path,
+.torii-wrap svg .torii-stroke rect{
+  stroke-dasharray:800;stroke-dashoffset:800;
+  animation:draw 2s ease forwards .3s;
+}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+.loader-kanji{
+  font-family:var(--f-display);
+  font-size:.85rem;letter-spacing:.6em;color:var(--ink-soft);
+  text-transform:uppercase;z-index:2;
+}
+.loader-title{
+  font-family:var(--f-display);
+  font-size:3rem;font-weight:700;color:var(--ink);
+  letter-spacing:.15em;
+  position:relative;z-index:2;
+  animation:fadeUp 1.2s ease 1.6s both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.loader-title::after{
+  content:"玉夜稲荷大神";font-size:.75rem;letter-spacing:.4em;
+  position:absolute;left:50%;bottom:-1.4rem;transform:translateX(-50%);
+  color:var(--vermilion);font-weight:500;
+}
+.loader-sub{
+  margin-top:1.2rem;
+  font-size:.78rem;letter-spacing:.3em;color:var(--ink-soft);
+  text-align:center;line-height:2;z-index:2;
+  animation:fadeUp 1.2s ease 2s both;
+}
+
+.bgm-choice{
+  display:flex;gap:1rem;margin-top:1.5rem;
+  padding:1rem 1.2rem;
+  border:1px solid var(--line);
+  background:var(--paper);
+  position:relative;z-index:2;
+  animation:fadeUp 1.2s ease 2.4s both;
+}
+.bgm-choice::before{
+  content:"音 / OST";
+  position:absolute;top:-9px;left:50%;transform:translateX(-50%);
+  background:var(--bg);padding:0 .8rem;
+  font-family:var(--f-mono);font-size:.65rem;letter-spacing:.3em;color:var(--ink-soft);
+}
+.bgm-btn{
+  background:transparent;border:1px solid var(--line);
+  padding:.7rem 1.2rem;
+  font-family:var(--f-display);font-size:.9rem;color:var(--ink);
+  display:flex;align-items:center;gap:.6rem;
+  transition:all .3s ease;
+}
+.bgm-btn:hover, .bgm-btn.active{background:var(--vermilion);color:#fff;border-color:var(--vermilion)}
+.bgm-btn .ico{font-size:1.1rem}
+.bgm-btn small{font-size:.65rem;letter-spacing:.2em;opacity:.6;display:block}
+
+.enter-btn{
+  margin-top:1rem;
+  background:var(--ink);color:var(--bg);
+  border:none;padding:1rem 3rem;
+  font-family:var(--f-display);letter-spacing:.4em;font-size:.85rem;
+  position:relative;z-index:2;
+  transition:all .4s ease;
+  animation:fadeUp 1.2s ease 2.8s both;
+  overflow:hidden;
+}
+.enter-btn::before{
+  content:"";position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:linear-gradient(90deg, transparent, var(--vermilion), transparent);
+  transition:left .6s;
+}
+.enter-btn:hover{background:var(--vermilion);letter-spacing:.6em}
+.enter-btn:hover::before{left:100%}
+
+/* ================================================
+   헤더
+================================================ */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:1.2rem 3rem;
+  display:flex;justify-content:space-between;align-items:center;
+  backdrop-filter:blur(12px);
+  background:color-mix(in srgb, var(--bg) 70%, transparent);
+  border-bottom:1px solid var(--line);
+  transition:all .4s;
+}
+.brand{display:flex;align-items:center;gap:.8rem;font-family:var(--f-display)}
+.brand-mark{
+  width:42px;height:42px;border-radius:50%;
+  background:var(--vermilion);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-weight:700;font-size:1.2rem;
+  box-shadow:0 4px 16px var(--glow), inset 0 -4px 8px rgba(0,0,0,.2);
+  position:relative;
+  font-family:var(--f-display);
+}
+.brand-mark::after{
+  content:"";position:absolute;inset:-4px;border-radius:50%;
+  border:1px solid var(--vermilion);opacity:.4;
+  animation:ripple 2.5s infinite;
+}
+@keyframes ripple{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.6);opacity:0}}
+.brand-text small{display:block;font-size:.6rem;letter-spacing:.4em;color:var(--ink-soft)}
+.brand-text strong{font-size:1rem;letter-spacing:.15em;font-weight:600}
+
+nav ul{display:flex;gap:2.5rem;list-style:none}
+nav a{
+  font-family:var(--f-display);
+  text-decoration:none;color:var(--ink);
+  font-size:.9rem;letter-spacing:.15em;
+  position:relative;padding:.3rem 0;
+  transition:color .3s;
+}
+nav a small{display:block;font-size:.55rem;letter-spacing:.3em;color:var(--ink-soft);text-align:center;margin-top:2px}
+nav a::after{content:"";position:absolute;bottom:-4px;left:50%;width:0;height:1px;background:var(--vermilion);transition:all .3s;transform:translateX(-50%)}
+nav a:hover::after{width:100%}
+nav a:hover{color:var(--vermilion)}
+
+.day-night-toggle{
+  display:flex;align-items:center;gap:.5rem;
+  border:1px solid var(--line);padding:.4rem;border-radius:99px;
+  background:var(--paper);
+}
+.dn-btn{
+  width:34px;height:34px;border-radius:50%;
+  border:none;background:transparent;
+  font-size:1rem;color:var(--ink-soft);
+  transition:all .3s;
+}
+.dn-btn.active{background:var(--ink);color:var(--bg)}
+body.night .dn-btn.active{background:var(--gold);color:var(--bg)}
+
+/* ================================================
+   히어로
+================================================ */
+.hero{
+  min-height:100vh;
+  position:relative;
+  padding:8rem 3rem 4rem;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:4rem;align-items:center;
+  z-index:2;
+  overflow:hidden;
+}
+
+/* 패럴럭스 한자 */
+.kanji-deco{
+  position:absolute;top:-3rem;left:-1rem;
+  font-family:var(--f-display);font-weight:800;
+  font-size:18rem;line-height:.85;
+  color:var(--ink);opacity:.06;
+  writing-mode:vertical-rl;
+  pointer-events:none;
+  user-select:none;
+  transition:transform .1s linear;
+}
+
+/* 떨어지는 꽃잎 */
+.petals{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.petal{
+  position:absolute;top:-30px;
+  width:14px;height:14px;
+  background:var(--vermilion);
+  clip-path:polygon(50% 0%, 80% 30%, 100% 70%, 50% 100%, 0% 70%, 20% 30%);
+  opacity:.6;
+  animation:fall linear infinite;
+}
+@keyframes fall{
+  0%{transform:translateY(-30px) translateX(0) rotate(0);opacity:0}
+  10%{opacity:.7}
+  90%{opacity:.7}
+  100%{transform:translateY(110vh) translateX(80px) rotate(720deg);opacity:0}
+}
+.petal:nth-child(1){left:5%;animation-duration:14s;animation-delay:0s;background:var(--vermilion)}
+.petal:nth-child(2){left:15%;animation-duration:18s;animation-delay:2s;background:var(--gold)}
+.petal:nth-child(3){left:25%;animation-duration:12s;animation-delay:4s;background:var(--vermilion-bright)}
+.petal:nth-child(4){left:35%;animation-duration:20s;animation-delay:1s;background:var(--vermilion)}
+.petal:nth-child(5){left:50%;animation-duration:16s;animation-delay:3s;background:var(--gold-soft)}
+.petal:nth-child(6){left:65%;animation-duration:13s;animation-delay:5s;background:var(--vermilion)}
+.petal:nth-child(7){left:75%;animation-duration:19s;animation-delay:0s;background:var(--vermilion-bright)}
+.petal:nth-child(8){left:85%;animation-duration:15s;animation-delay:2.5s;background:var(--gold)}
+.petal:nth-child(9){left:92%;animation-duration:17s;animation-delay:4s;background:var(--vermilion)}
+.petal:nth-child(10){left:45%;animation-duration:21s;animation-delay:6s;background:var(--gold-soft)}
+
+.hero-left{position:relative;z-index:3}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:.8rem;
+  font-family:var(--f-mono);font-size:.7rem;letter-spacing:.5em;
+  color:var(--vermilion);margin-bottom:1.5rem;text-transform:uppercase;
+}
+.hero-eyebrow::before{content:"";width:40px;height:1px;background:var(--vermilion)}
+
+.hero h1{
+  font-family:var(--f-display);
+  font-size:clamp(3rem, 6vw, 5.5rem);
+  font-weight:700;line-height:1.05;
+  letter-spacing:-.01em;
+  margin-bottom:1.5rem;
+}
+.hero h1 .accent{
+  color:var(--vermilion);font-weight:700;
+  position:relative;display:inline-block;
+}
+.hero h1 .accent::after{
+  content:"";position:absolute;left:0;bottom:-4px;
+  width:100%;height:8px;
+  background:var(--vermilion);opacity:.15;
+  z-index:-1;
+}
+/* 낮 강조 — 금색 계열 (해/풍요/소원) */
+.hero h1 .accent-day{
+  color:var(--gold);font-weight:700;
+  position:relative;display:inline-block;
+}
+.hero h1 .accent-day::after{
+  content:"";position:absolute;left:0;bottom:-4px;
+  width:100%;height:8px;
+  background:var(--gold);opacity:.2;
+  z-index:-1;
+}
+/* 밤 강조 — 주홍 계열 (봉인/결계/도리이) */
+.hero h1 .accent-night{
+  color:var(--vermilion);font-weight:700;
+  position:relative;display:inline-block;
+}
+.hero h1 .accent-night::after{
+  content:"";position:absolute;left:0;bottom:-4px;
+  width:100%;height:8px;
+  background:var(--vermilion);opacity:.18;
+  z-index:-1;
+}
+/* 본문 인라인 강조 */
+.hero-desc .em-day{
+  color:var(--gold);font-weight:600;
+  font-family:var(--f-display);
+}
+.hero-desc .em-night{
+  color:var(--vermilion);font-weight:600;
+  font-family:var(--f-display);
+}
+.hero h1 .small-jp{
+  display:block;font-size:1rem;letter-spacing:.4em;
+  font-weight:400;color:var(--ink-soft);margin-top:1rem;
+}
+.hero-desc{
+  font-size:1.05rem;line-height:1.9;color:var(--ink-soft);
+  max-width:480px;margin-bottom:2.5rem;
+}
+.hero-meta{
+  display:flex;gap:2.5rem;flex-wrap:wrap;
+  padding-top:2rem;border-top:1px solid var(--line);
+}
+.meta-item{font-family:var(--f-display)}
+.meta-item small{display:block;font-size:.6rem;letter-spacing:.4em;color:var(--ink-soft);margin-bottom:.4rem}
+.meta-item strong{font-size:1rem;font-weight:600;letter-spacing:.05em}
+
+/* 히어로 우측: 도리이 호흡 + 부적 */
+.hero-right{
+  position:relative;height:560px;
+  display:flex;align-items:center;justify-content:center;
+  z-index:3;
+}
+.big-torii{
+  position:absolute;width:90%;height:90%;
+  display:flex;align-items:center;justify-content:center;
+  animation:breathe 5s ease-in-out infinite;
+}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
+.big-torii svg{width:100%;height:100%;filter:drop-shadow(0 20px 60px var(--glow))}
+
+/* 도리이 뒤 빛나는 원 */
+.torii-glow{
+  position:absolute;width:380px;height:380px;border-radius:50%;
+  background:radial-gradient(circle, var(--gold) 0%, transparent 60%);
+  opacity:.3;
+  animation:glowPulse 4s ease-in-out infinite;
+  z-index:1;
+}
+@keyframes glowPulse{0%,100%{opacity:.2;transform:scale(.95)}50%{opacity:.5;transform:scale(1.05)}}
+
+/* 빛나는 입자 */
+.spirits{position:absolute;inset:0;pointer-events:none;z-index:2}
+.spirit{
+  position:absolute;width:8px;height:8px;border-radius:50%;
+  background:var(--gold);
+  box-shadow:0 0 16px var(--gold), 0 0 30px var(--gold-soft);
+  animation:float 6s ease-in-out infinite;
+}
+.spirit:nth-child(1){top:20%;left:30%;animation-delay:0s}
+.spirit:nth-child(2){top:60%;left:70%;animation-delay:1s;background:var(--vermilion);box-shadow:0 0 16px var(--vermilion)}
+.spirit:nth-child(3){top:80%;left:20%;animation-delay:2s}
+.spirit:nth-child(4){top:30%;left:80%;animation-delay:3s;background:var(--vermilion);box-shadow:0 0 16px var(--vermilion)}
+.spirit:nth-child(5){top:50%;left:50%;animation-delay:4s}
+.spirit:nth-child(6){top:15%;left:60%;animation-delay:1.5s;background:var(--vermilion-bright)}
+.spirit:nth-child(7){top:70%;left:40%;animation-delay:2.5s}
+@keyframes float{
+  0%,100%{transform:translateY(0) translateX(0) scale(1);opacity:.3}
+  50%{transform:translateY(-40px) translateX(20px) scale(1.4);opacity:1}
+}
+
+.ofuda{
+  position:absolute;
+  background:var(--paper);
+  border:1px solid var(--ink);
+  padding:1.5rem 1rem;
+  width:130px;
+  text-align:center;
+  font-family:var(--f-display);
+  box-shadow:8px 8px 0 var(--shadow);
+  writing-mode:vertical-rl;
+  text-orientation:upright;
+  z-index:4;
+}
+.ofuda-1{top:5%;right:5%;transform:rotate(8deg);font-size:.95rem;letter-spacing:.3em;color:var(--vermilion-deep);animation:sway 4s ease-in-out infinite}
+.ofuda-2{bottom:8%;left:0%;transform:rotate(-6deg);font-size:.85rem;letter-spacing:.25em;background:var(--vermilion);color:#fff;border-color:var(--vermilion);animation:sway 5s ease-in-out infinite reverse}
+@keyframes sway{0%,100%{transform:rotate(8deg) translateY(0)}50%{transform:rotate(6deg) translateY(-8px)}}
+.ofuda-2{animation-name:sway2}
+@keyframes sway2{0%,100%{transform:rotate(-6deg) translateY(0)}50%{transform:rotate(-8deg) translateY(-6px)}}
+.ofuda::before{
+  content:"";position:absolute;top:8px;left:50%;transform:translateX(-50%);
+  width:30px;height:3px;background:currentColor;
+}
+
+/* ================================================
+   섹션 공통 — 등장 애니메이션
+================================================ */
+section{position:relative;z-index:2;padding:8rem 3rem}
+
+.section-head{
+  margin-bottom:5rem;
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:2rem;flex-wrap:wrap;
+}
+.section-eyebrow{
+  font-family:var(--f-mono);font-size:.75rem;letter-spacing:.5em;
+  color:var(--vermilion);margin-bottom:1rem;
+  display:flex;align-items:center;gap:1rem;
+}
+.section-eyebrow::before{content:"◆";color:var(--vermilion)}
+
+.section-title{
+  font-family:var(--f-display);
+  font-size:clamp(2.2rem,4vw,3.8rem);
+  font-weight:700;line-height:1.1;
+  letter-spacing:-.01em;
+  position:relative;
+}
+.section-title .jp{
+  display:block;font-size:.95rem;letter-spacing:.4em;
+  color:var(--ink-soft);font-weight:400;margin-top:.6rem;
+}
+.section-title .seal{
+  position:absolute;top:-20px;right:-50px;
+  width:60px;height:60px;
+  background:var(--vermilion);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:var(--f-display);font-size:1.5rem;font-weight:700;
+  transform:rotate(-8deg);
+  box-shadow:4px 4px 0 var(--shadow);
+  border-radius:4px;
+}
+
+.section-desc{max-width:380px;font-size:.95rem;line-height:1.8;color:var(--ink-soft)}
+
+/* 스크롤 등장 */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 1s ease, transform 1s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:translateY(0)}
+.reveal-stagger > *{opacity:0;transform:translateY(30px);transition:opacity .8s, transform .8s cubic-bezier(.2,.8,.2,1)}
+.reveal-stagger.in > *{opacity:1;transform:translateY(0)}
+.reveal-stagger.in > *:nth-child(1){transition-delay:.05s}
+.reveal-stagger.in > *:nth-child(2){transition-delay:.15s}
+.reveal-stagger.in > *:nth-child(3){transition-delay:.25s}
+.reveal-stagger.in > *:nth-child(4){transition-delay:.35s}
+.reveal-stagger.in > *:nth-child(5){transition-delay:.45s}
+
+/* ================================================
+   캐릭터 — 게임풍 ID 카드 강화
+================================================ */
+#characters{background:var(--bg-2);position:relative;overflow:hidden}
+#characters::before{
+  content:"登 場 神 格";
+  position:absolute;top:5rem;right:-2rem;
+  font-family:var(--f-display);font-size:9rem;font-weight:800;
+  color:var(--ink);opacity:.04;letter-spacing:.3em;
+  pointer-events:none;
+  writing-mode:vertical-rl;
+}
+
+.char-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;
+  perspective:1500px;
+}
+.char-card{
+  background:var(--paper);
+  border:1px solid var(--line);
+  position:relative;
+  transition:transform .6s cubic-bezier(.2,.8,.2,1), box-shadow .6s;
+  transform-style:preserve-3d;
+  overflow:hidden;
+  --tilt-x:0deg;
+  --tilt-y:0deg;
+}
+.char-card:hover{
+  transform:perspective(1500px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateY(-10px);
+  box-shadow:0 30px 70px var(--shadow), 0 0 40px var(--glow);
+}
+
+/* 빛나는 테두리 */
+.char-card::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(120deg, transparent 30%, var(--vermilion) 50%, transparent 70%);
+  opacity:0;transition:opacity .6s;
+  pointer-events:none;
+  mix-blend-mode:overlay;
+}
+.char-card:hover::before{opacity:.4;animation:shine 1.2s ease}
+@keyframes shine{0%{background-position:-200% 0}100%{background-position:200% 0}}
+
+/* 모서리 장식 (게임 ID 카드 코너) */
+.char-card::after{
+  content:"";position:absolute;top:8px;left:8px;width:20px;height:20px;
+  border-top:2px solid var(--vermilion);border-left:2px solid var(--vermilion);
+  pointer-events:none;
+}
+.corner{position:absolute;width:20px;height:20px;pointer-events:none;z-index:5}
+.corner.tr{top:8px;right:8px;border-top:2px solid var(--vermilion);border-right:2px solid var(--vermilion)}
+.corner.bl{bottom:8px;left:8px;border-bottom:2px solid var(--vermilion);border-left:2px solid var(--vermilion)}
+.corner.br{bottom:8px;right:8px;border-bottom:2px solid var(--vermilion);border-right:2px solid var(--vermilion)}
+
+.char-card-top{
+  position:relative;
+  aspect-ratio:5/6;  /* 카드 이미지 800×960과 동일 비율 */
+  overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+
+.char-card[data-c="tamao"] .char-card-top{background:radial-gradient(circle at 50% 60%, rgba(176,136,65,.3), transparent 60%), linear-gradient(135deg, #f4ede0, #e8dcc0)}
+.char-card[data-c="susano"] .char-card-top{background:radial-gradient(circle at 50% 60%, rgba(43,54,88,.45), transparent 60%), linear-gradient(135deg, #2b3658, #4a5a8a)}
+.char-card[data-c="orochi"] .char-card-top{background:radial-gradient(circle at 50% 60%, rgba(91,107,62,.4), transparent 60%), linear-gradient(135deg, #3d4a2e, #6b7b4e)}
+
+body.night .char-card[data-c="tamao"] .char-card-top{background:radial-gradient(circle at 50% 60%, rgba(231,201,122,.25), transparent 60%), linear-gradient(135deg, #2a2440, #1a1d36)}
+body.night .char-card[data-c="susano"] .char-card-top{background:radial-gradient(circle at 50% 60%, rgba(110,123,182,.35), transparent 60%), linear-gradient(135deg, #1a1d36, #2b3658)}
+body.night .char-card[data-c="orochi"] .char-card-top{background:radial-gradient(circle at 50% 60%, rgba(154,176,116,.25), transparent 60%), linear-gradient(135deg, #1a2a1a, #2a3a2a)}
+
+.char-id{
+  position:absolute;top:1.2rem;left:1.2rem;
+  font-family:var(--f-mono);font-size:.65rem;letter-spacing:.3em;
+  color:var(--ink);
+  background:var(--paper);padding:.3rem .6rem;
+  border:1px solid var(--ink);
+  z-index:4;
+}
+.char-rarity{
+  position:absolute;top:1.2rem;right:1.2rem;z-index:4;
+  display:flex;gap:2px;
+}
+.char-rarity span{
+  font-size:.8rem;color:var(--gold);
+  text-shadow:0 0 6px var(--gold);
+}
+
+.char-kanji-bg{
+  position:absolute;font-family:var(--f-display);font-weight:800;
+  font-size:14rem;line-height:.8;
+  color:#fff;opacity:.1;
+  bottom:-2rem;right:-1rem;
+  pointer-events:none;
+  writing-mode:vertical-rl;
+}
+/* 카드용 일러스트 컨테이너 — 얼굴 클로즈업 800×960 (5:6) */
+.char-portrait{
+  width:100%;height:100%;position:relative;z-index:2;
+  display:flex;align-items:center;justify-content:center;
+}
+.char-portrait-svg{
+  width:auto;height:90%;
+  max-width:90%;max-height:100%;
+  position:relative;z-index:2;
+}
+/* TODO: 깃허브 연결 시 SVG를 <img>로 교체
+   <img src="assets/images/characters/tamao-card.webp"
+        alt="이누가미 타마오"
+        class="char-portrait-img"> */
+.char-portrait-img{
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:center top;
+  position:relative;z-index:2;
+}
+
+/* 신력 게이지 */
+.power-bar{
+  position:absolute;bottom:1rem;left:1.2rem;right:1.2rem;
+  z-index:4;
+  font-family:var(--f-mono);
+}
+.power-bar-label{
+  font-size:.55rem;letter-spacing:.3em;color:#fff;
+  text-shadow:0 1px 2px rgba(0,0,0,.6);
+  display:flex;justify-content:space-between;margin-bottom:4px;
+}
+.power-bar-track{
+  height:4px;background:rgba(255,255,255,.2);
+  position:relative;border-radius:2px;overflow:hidden;
+}
+.power-bar-fill{
+  position:absolute;left:0;top:0;bottom:0;
+  background:linear-gradient(90deg, var(--vermilion), var(--gold));
+  border-radius:2px;
+  box-shadow:0 0 8px var(--vermilion);
+}
+
+.char-card-body{padding:2rem 1.8rem 1.8rem}
+.char-name-jp{
+  font-family:var(--f-display);font-size:.75rem;
+  letter-spacing:.4em;color:var(--vermilion);margin-bottom:.3rem;
+}
+.char-name{
+  font-family:var(--f-display);font-size:1.6rem;font-weight:700;
+  margin-bottom:.3rem;letter-spacing:.05em;
+}
+.char-role{
+  font-family:var(--f-display);font-size:.85rem;color:var(--ink-soft);
+  margin-bottom:1.2rem;font-style:italic;
+}
+
+.char-stats{
+  display:grid;grid-template-columns:1fr 1fr;gap:.6rem;
+  padding:1rem 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  margin-bottom:1.2rem;
+  position:relative;
+}
+.char-stats::before{
+  content:"DATA";position:absolute;top:-7px;left:0;
+  background:var(--paper);padding:0 .4rem;
+  font-family:var(--f-mono);font-size:.55rem;letter-spacing:.3em;color:var(--ink-soft);
+}
+.stat-row{display:flex;flex-direction:column;gap:.15rem}
+.stat-label{font-family:var(--f-mono);font-size:.55rem;letter-spacing:.3em;color:var(--ink-soft)}
+.stat-val{font-family:var(--f-display);font-size:.85rem;font-weight:600;line-height:1.3}
+
+.char-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.2rem}
+.tag{
+  font-size:.7rem;padding:.3rem .65rem;
+  border:1px solid var(--line);
+  font-family:var(--f-display);letter-spacing:.05em;
+  background:transparent;
+  transition:all .25s;
+}
+.tag.primary{background:var(--vermilion);color:#fff;border-color:var(--vermilion)}
+.tag.gold{background:var(--gold);color:var(--paper);border-color:var(--gold)}
+
+.char-quote{
+  font-family:var(--f-hand);
+  font-size:.92rem;line-height:1.7;color:var(--ink-soft);
+  padding:1rem;border-left:3px solid var(--vermilion);
+  background:linear-gradient(90deg, rgba(192,57,43,.05), transparent);
+  position:relative;
+}
+.char-quote::before{
+  content:"「";position:absolute;top:-8px;left:8px;
+  font-family:var(--f-display);font-size:1.5rem;color:var(--vermilion);
+}
+
+/* 카드 우상단 "詳細を見る" 안내 */
+.char-card .view-detail{
+  position:absolute;top:1.2rem;right:5rem;
+  font-family:var(--f-mono);font-size:.55rem;letter-spacing:.3em;
+  color:var(--ink);background:var(--paper);
+  padding:.3rem .5rem;border:1px solid var(--line);
+  z-index:4;
+  opacity:0;transform:translateY(-4px);
+  transition:all .3s;
+  pointer-events:none;
+}
+.char-card:hover .view-detail{opacity:1;transform:translateY(0)}
+
+/* ================================================
+   캐릭터 상세 모달 (CHARACTER DETAIL POPUP)
+================================================ */
+.char-modal{
+  position:fixed;inset:0;z-index:9990;
+  background:rgba(10,8,6,.7);
+  backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;
+  padding:2rem;
+  opacity:0;visibility:hidden;
+  transition:opacity .4s, visibility .4s;
+}
+.char-modal.show{opacity:1;visibility:visible}
+
+.char-modal-inner{
+  position:relative;
+  width:100%;max-width:960px;
+  max-height:90vh;
+  background:var(--paper);
+  border:1px solid var(--ink);
+  box-shadow:20px 20px 0 rgba(0,0,0,.4);
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:380px 1fr;
+  transform:scale(.92) translateY(20px);
+  transition:transform .5s cubic-bezier(.2,.8,.2,1);
+}
+.char-modal.show .char-modal-inner{transform:scale(1) translateY(0)}
+
+/* 모달 좌측 — 인물 이미지 + 기본정보 */
+.modal-portrait{
+  position:relative;
+  background:linear-gradient(135deg, var(--bg), var(--bg-2));
+  display:flex;flex-direction:column;
+  overflow:hidden;
+}
+.modal-portrait::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 30%, rgba(192,57,43,.2), transparent 60%);
+}
+.modal-portrait[data-c="tamao"]::before{background:radial-gradient(circle at 50% 30%, rgba(176,136,65,.35), transparent 60%)}
+.modal-portrait[data-c="susano"]{background:linear-gradient(135deg, #2b3658, #4a5a8a)}
+.modal-portrait[data-c="susano"]::before{background:radial-gradient(circle at 50% 30%, rgba(110,123,182,.45), transparent 60%)}
+.modal-portrait[data-c="orochi"]{background:linear-gradient(135deg, #3d4a2e, #6b7b4e)}
+.modal-portrait[data-c="orochi"]::before{background:radial-gradient(circle at 50% 30%, rgba(154,176,116,.4), transparent 60%)}
+
+.modal-portrait-img{
+  flex:1;
+  display:flex;align-items:center;justify-content:center;
+  padding:2rem 1.5rem 1rem;
+  position:relative;z-index:2;
+  min-height:0;
+}
+.modal-portrait-img svg{
+  width:auto;
+  max-width:100%;
+  max-height:420px;
+  filter:drop-shadow(0 12px 24px rgba(0,0,0,.25));
+}
+/* TODO: 깃허브 연결 시 SVG를 <img>로 교체
+   <img src="assets/images/characters/tamao-full.webp"
+        alt="이누가미 타마오 전신"
+        class="modal-full-img"> */
+.modal-full-img{
+  width:auto;
+  max-width:100%;
+  max-height:420px;
+  object-fit:contain;
+  filter:drop-shadow(0 12px 24px rgba(0,0,0,.25));
+}
+
+/* 모달 좌하단 정보 */
+.modal-portrait-info{
+  position:relative;z-index:2;
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(12px);
+  border-top:1px solid rgba(255,255,255,.15);
+  padding:1.2rem 1.5rem;
+  color:#fff;
+}
+.modal-portrait[data-c="tamao"] .modal-portrait-info{
+  background:rgba(26,22,20,.05);
+  border-top-color:rgba(26,22,20,.15);
+  color:var(--ink);
+}
+.modal-portrait-info .mi-jp{
+  font-family:var(--f-display);font-size:.7rem;letter-spacing:.4em;
+  color:var(--vermilion);margin-bottom:.3rem;
+}
+.modal-portrait-info .mi-name{
+  font-family:var(--f-display);font-size:1.6rem;font-weight:700;
+  letter-spacing:.05em;margin-bottom:.2rem;
+}
+.modal-portrait-info .mi-name-kr{
+  font-family:var(--f-display);font-size:.85rem;font-weight:500;
+  opacity:.75;letter-spacing:.05em;
+}
+
+/* 모달 우측 — 상세 텍스트 */
+.modal-body{
+  position:relative;
+  padding:2.5rem 2.5rem 2rem;
+  overflow-y:auto;
+  max-height:90vh;
+}
+.modal-body::-webkit-scrollbar{width:6px}
+.modal-body::-webkit-scrollbar-track{background:var(--bg-2)}
+.modal-body::-webkit-scrollbar-thumb{background:var(--vermilion);border-radius:3px}
+
+.modal-id{
+  font-family:var(--f-mono);font-size:.65rem;letter-spacing:.4em;
+  color:var(--vermilion);margin-bottom:.6rem;
+  display:flex;align-items:center;gap:.6rem;
+}
+.modal-id::after{content:"";flex:1;height:1px;background:var(--line)}
+
+.modal-title{
+  font-family:var(--f-display);font-size:1.8rem;font-weight:700;
+  margin-bottom:.4rem;letter-spacing:.02em;
+}
+.modal-role{
+  font-family:var(--f-display);font-size:.95rem;color:var(--ink-soft);
+  margin-bottom:1.5rem;font-style:italic;
+}
+
+/* 한 줄 요약 */
+.modal-oneliner{
+  background:linear-gradient(135deg, rgba(192,57,43,.08), transparent);
+  border-left:3px solid var(--vermilion);
+  padding:1rem 1.2rem;margin-bottom:2rem;
+  position:relative;
+}
+.modal-oneliner small{
+  display:block;
+  font-family:var(--f-mono);font-size:.55rem;letter-spacing:.4em;
+  color:var(--vermilion);margin-bottom:.4rem;
+}
+.modal-oneliner p{
+  font-family:var(--f-display);font-size:1rem;
+  font-weight:600;line-height:1.6;color:var(--ink);
+}
+
+/* 섹션 */
+.modal-section{margin-bottom:1.8rem}
+.modal-section h4{
+  font-family:var(--f-display);font-size:.95rem;font-weight:700;
+  margin-bottom:.7rem;letter-spacing:.1em;
+  display:flex;align-items:center;gap:.6rem;
+}
+.modal-section h4 small{
+  font-family:var(--f-mono);font-size:.55rem;letter-spacing:.4em;
+  color:var(--vermilion);font-weight:500;
+}
+.modal-section h4::before{
+  content:"";width:4px;height:14px;
+  background:var(--vermilion);
+  display:inline-block;
+}
+.modal-section p{
+  font-size:.88rem;line-height:1.85;color:var(--ink-soft);
+}
+.modal-section p .em-day{color:var(--gold);font-weight:600;font-family:var(--f-display)}
+.modal-section p .em-night{color:var(--vermilion);font-weight:600;font-family:var(--f-display)}
+
+/* 핵심 모순 (특별) */
+.modal-paradox{
+  margin-top:.5rem;
+  padding:1.2rem 1.4rem;
+  background:linear-gradient(135deg, var(--bg-2), var(--bg));
+  border:1px dashed var(--vermilion);
+  position:relative;
+}
+.modal-paradox::before{
+  content:"矛盾";
+  position:absolute;top:-12px;left:1.4rem;
+  background:var(--paper);padding:0 .6rem;
+  font-family:var(--f-display);font-size:.85rem;font-weight:700;
+  color:var(--vermilion);letter-spacing:.1em;
+}
+.modal-paradox p{
+  font-size:.85rem;line-height:1.8;color:var(--ink);
+}
+
+/* 닫기 버튼 */
+.modal-close{
+  position:absolute;top:1rem;right:1rem;z-index:10;
+  width:38px;height:38px;
+  background:var(--paper);border:1px solid var(--ink);
+  font-family:var(--f-mono);font-size:1rem;color:var(--ink);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .25s;
+}
+.modal-close:hover{background:var(--ink);color:var(--paper);transform:rotate(90deg)}
+
+@media(max-width:780px){
+  .char-modal-inner{grid-template-columns:1fr;max-height:92vh;overflow-y:auto}
+  .modal-portrait{max-height:340px}
+  .modal-body{padding:2rem 1.5rem 1.5rem;max-height:none}
+  .modal-portrait-img svg{max-height:260px}
+}
+
+/* ================================================
+   세계관
+================================================ */
+#world{padding:10rem 3rem;position:relative;overflow:hidden}
+#world::before{
+  content:"世界觀";
+  position:absolute;top:50%;left:-3rem;transform:translateY(-50%);
+  font-family:var(--f-display);font-size:14rem;font-weight:800;
+  color:var(--ink);opacity:.03;letter-spacing:.2em;
+  pointer-events:none;
+  writing-mode:vertical-rl;
+}
+
+.world-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:5rem}
+.world-left{position:sticky;top:6rem;align-self:start}
+.world-cards{display:flex;flex-direction:column;gap:1.5rem}
+
+.world-card{
+  display:grid;grid-template-columns:80px 1fr auto;
+  gap:1.5rem;align-items:center;
+  padding:2rem;
+  background:var(--paper);
+  border:1px solid var(--line);
+  transition:all .4s;
+  position:relative;overflow:hidden;
+}
+.world-card::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:var(--vermilion);transform:scaleY(0);transform-origin:top;transition:transform .4s;
+}
+.world-card:hover{transform:translateX(8px);box-shadow:0 16px 40px var(--shadow)}
+.world-card:hover::before{transform:scaleY(1)}
+
+/* 호버시 한자 떠오름 */
+.world-card .ghost-kanji{
+  position:absolute;top:50%;right:1rem;transform:translateY(-50%) translateX(20px);
+  font-family:var(--f-display);font-size:5rem;font-weight:800;
+  color:var(--vermilion);opacity:0;
+  transition:all .5s;pointer-events:none;
+}
+.world-card:hover .ghost-kanji{opacity:.1;transform:translateY(-50%) translateX(0)}
+
+.wc-num{
+  font-family:var(--f-display);font-size:3rem;font-weight:800;
+  color:var(--vermilion);line-height:1;
+  font-feature-settings:"tnum";
+}
+.wc-num small{display:block;font-size:.55rem;letter-spacing:.3em;color:var(--ink-soft);font-weight:400;margin-top:.4rem}
+.wc-content h3{
+  font-family:var(--f-display);font-size:1.35rem;font-weight:700;
+  margin-bottom:.4rem;letter-spacing:.02em;
+}
+.wc-content h3 small{display:block;font-size:.65rem;letter-spacing:.4em;color:var(--vermilion);margin-bottom:.3rem;font-weight:500}
+.wc-content p{font-size:.88rem;line-height:1.7;color:var(--ink-soft)}
+.wc-arrow{font-family:var(--f-display);font-size:1.3rem;color:var(--ink-soft);transition:all .3s}
+.world-card:hover .wc-arrow{color:var(--vermilion);transform:translateX(4px)}
+
+/* 신사 지도 */
+.shrine-map{
+  background:var(--paper);
+  border:1px solid var(--ink);
+  padding:2rem;position:relative;
+  box-shadow:12px 12px 0 var(--shadow);
+}
+.shrine-map-title{
+  font-family:var(--f-display);font-size:1rem;letter-spacing:.4em;
+  text-align:center;padding-bottom:1rem;
+  border-bottom:1px solid var(--line);margin-bottom:1.5rem;
+}
+.shrine-map-title small{display:block;font-size:.6rem;letter-spacing:.3em;color:var(--ink-soft);margin-top:.3rem}
+
+/* ================================================
+   인터랙티브 경내 지도
+================================================ */
+.map-container{
+  position:relative;
+  width:100%;
+  aspect-ratio:4/3;
+  background:#e8dcc0;
+  border:1px solid var(--line);
+  /* overflow는 제거 — 팝업이 박스 바깥으로 펼쳐질 수 있게 */
+}
+/* 배경 이미지는 inner로 분리해서 이미지만 잘리게 */
+.map-bg{
+  position:absolute;inset:0;
+  /* TODO: 깃허브 연결 시 아래 주석 해제하고 .map-placeholder 삭제 */
+  background-image: url('assets/images/shrine-map.webp');
+  background-size:cover;
+  background-position:center;
+  overflow:hidden;
+  z-index:0;
+}
+.map-placeholder{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:
+    repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(192,57,43,.05) 20px, rgba(192,57,43,.05) 21px),
+    linear-gradient(135deg, #ebe0c9, #d9c9a7);
+  font-family:var(--f-display);
+  color:var(--ink-soft);
+  text-align:center;
+  padding:2rem;
+}
+.map-placeholder strong{font-size:1rem;letter-spacing:.3em;margin-bottom:.5rem;color:var(--vermilion)}
+.map-placeholder p{font-size:.75rem;line-height:1.6}
+.map-placeholder code{
+  background:var(--paper);padding:.15rem .4rem;font-family:var(--f-mono);font-size:.7rem;
+  border:1px solid var(--line);display:inline-block;margin-top:.6rem;
+}
+
+.map-pin{
+  position:absolute;
+  width:32px;height:32px;
+  transform:translate(-50%, -50%);
+  z-index:5;
+}
+.map-pin .pin-circle{
+  width:100%;height:100%;
+  background:var(--vermilion);
+  border:2px solid var(--paper);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--f-display);font-weight:700;font-size:.85rem;color:#fff;
+  box-shadow:0 4px 12px rgba(192,57,43,.5), 0 0 0 4px rgba(192,57,43,.2);
+  transition:all .3s cubic-bezier(.2,.8,.2,1);
+  position:relative;
+}
+.map-pin:hover .pin-circle{
+  transform:scale(1.2);
+  box-shadow:0 8px 20px rgba(192,57,43,.7), 0 0 0 8px rgba(192,57,43,.3);
+}
+.map-pin.active{z-index:30}
+.map-pin.active .pin-circle{
+  background:var(--gold);
+  transform:scale(1.25);
+  box-shadow:0 4px 12px rgba(176,136,65,.5), 0 0 0 4px rgba(176,136,65,.2);
+}
+.map-pin.active .pin-circle::before{
+  animation:none;
+  opacity:0;
+}
+.map-pin .pin-circle::before{
+  content:"";position:absolute;inset:-4px;border-radius:50%;
+  border:2px solid var(--vermilion);
+  animation:pinPulse 2s infinite;
+}
+@keyframes pinPulse{
+  0%{transform:scale(1);opacity:.8}
+  100%{transform:scale(1.8);opacity:0}
+}
+.map-pin .pin-label{
+  position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);
+  background:var(--ink);color:var(--paper);
+  padding:.3rem .7rem;
+  font-family:var(--f-display);font-size:.65rem;
+  letter-spacing:.2em;white-space:nowrap;
+  opacity:0;pointer-events:none;
+  transition:opacity .3s;
+}
+.map-pin:hover .pin-label{opacity:1}
+
+.map-popup{
+  position:absolute;
+  width:260px;
+  background:var(--paper);
+  border:1px solid var(--ink);
+  box-shadow:8px 8px 0 var(--shadow);
+  padding:1.3rem;
+  z-index:50;
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(10px);
+  transition:opacity .3s, transform .3s, visibility .3s;
+  pointer-events:none;
+}
+.map-popup.show{
+  opacity:1;visibility:visible;
+  transform:translateY(0);
+  pointer-events:auto;
+}
+.map-popup.pos-br{top:calc(100% + 22px);left:-8px}
+.map-popup.pos-bl{top:calc(100% + 22px);right:-8px}
+.map-popup.pos-tr{bottom:calc(100% + 22px);left:-8px}
+.map-popup.pos-tl{bottom:calc(100% + 22px);right:-8px}
+
+.popup-num{
+  display:inline-block;
+  background:var(--vermilion);color:#fff;
+  width:30px;height:30px;border-radius:50%;
+  text-align:center;line-height:30px;
+  font-family:var(--f-display);font-weight:700;font-size:.85rem;
+  margin-bottom:.7rem;
+}
+.popup-title{
+  font-family:var(--f-display);font-size:1.1rem;font-weight:700;
+  margin-bottom:.3rem;letter-spacing:.05em;
+}
+.popup-jp{
+  font-family:var(--f-display);font-size:.65rem;letter-spacing:.4em;
+  color:var(--vermilion);margin-bottom:.9rem;
+}
+.popup-desc{
+  font-size:.78rem;line-height:1.7;color:var(--ink-soft);
+  padding-top:.7rem;border-top:1px solid var(--line);
+}
+.popup-close{
+  position:absolute;top:.5rem;right:.5rem;
+  width:22px;height:22px;
+  background:transparent;border:1px solid var(--line);
+  font-family:var(--f-mono);font-size:.7rem;color:var(--ink-soft);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .25s;
+}
+.popup-close:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* ================================================
+   신사 섹션 (단독)
+================================================ */
+#shrine{padding:10rem 3rem;position:relative}
+#shrine::before{
+  content:"神 社";
+  position:absolute;top:50%;right:-3rem;transform:translateY(-50%);
+  font-family:var(--f-display);font-size:14rem;font-weight:800;
+  color:var(--ink);opacity:.03;letter-spacing:.3em;
+  pointer-events:none;writing-mode:vertical-rl;
+  /* 한자 워터마크가 섹션 안에 머물도록 — 우측 클립 */
+  clip-path:inset(0 0 0 0);
+}
+
+.shrine-grid{
+  display:grid;grid-template-columns:1fr 1.1fr;gap:5rem;
+  align-items:start;
+}
+
+.shrine-intro h3{
+  font-family:var(--f-display);font-size:1.3rem;font-weight:700;
+  margin-bottom:1rem;letter-spacing:.05em;
+  display:flex;align-items:center;gap:.8rem;
+}
+.shrine-intro h3 .label-dot{
+  display:inline-block;width:8px;height:8px;background:var(--vermilion);
+  border-radius:50%;
+}
+.shrine-intro p{
+  font-size:.92rem;line-height:1.85;color:var(--ink-soft);
+  margin-bottom:1.5rem;
+}
+.shrine-intro p strong{color:var(--ink);font-weight:600}
+.shrine-intro p .em-day{color:var(--gold);font-weight:600;font-family:var(--f-display)}
+.shrine-intro p .em-night{color:var(--vermilion);font-weight:600;font-family:var(--f-display)}
+
+.shrine-meta-table{
+  margin-top:2rem;
+  background:var(--paper);
+  border:1px solid var(--line);
+  padding:1.2rem 1.5rem;
+}
+.shrine-meta-row{
+  display:grid;grid-template-columns:90px 1fr;
+  gap:1rem;padding:.6rem 0;
+  border-bottom:1px dashed var(--line);
+}
+.shrine-meta-row:last-child{border-bottom:none}
+.shrine-meta-row dt{
+  font-family:var(--f-mono);font-size:.65rem;letter-spacing:.3em;
+  color:var(--vermilion);text-transform:uppercase;align-self:center;
+}
+.shrine-meta-row dd{font-family:var(--f-display);font-size:.85rem;line-height:1.5}
+
+.warning-strip{
+  margin-top:1.5rem;
+  padding:1rem 1.2rem;
+  background:linear-gradient(90deg, rgba(192,57,43,.1), transparent);
+  border-left:3px solid var(--vermilion);
+  font-size:.85rem;line-height:1.7;color:var(--ink-soft);
+  font-family:var(--f-body);
+}
+.warning-strip strong{
+  display:block;
+  font-family:var(--f-display);font-size:.7rem;letter-spacing:.4em;
+  color:var(--vermilion);margin-bottom:.4rem;
+}
+
+/* 핀 가이드 (지도 아래) */
+.pin-guide{
+  margin-top:1.5rem;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;
+}
+.pin-guide-item{
+  font-family:var(--f-display);font-size:.72rem;
+  display:flex;align-items:center;gap:.4rem;
+  padding:.5rem .6rem;
+  background:var(--paper);border:1px solid var(--line);
+  transition:all .25s;
+}
+.pin-guide-item:hover{background:var(--vermilion);color:#fff;border-color:var(--vermilion)}
+.pin-guide-num{
+  width:20px;height:20px;border-radius:50%;
+  background:var(--vermilion);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.6rem;flex-shrink:0;
+}
+.pin-guide-item:hover .pin-guide-num{background:#fff;color:var(--vermilion)}
+
+/* ================================================
+   세계관 — 카테고리 카드 (요괴/타카마가하라)
+================================================ */
+.lore-cards-wrap{
+  margin-top:5rem;
+  display:grid;grid-template-columns:1fr 1fr;gap:2rem;
+}
+.lore-card{
+  background:var(--paper);
+  border:1px solid var(--line);
+  padding:2.5rem;
+  position:relative;
+  overflow:hidden;
+  transition:all .4s;
+}
+.lore-card:hover{transform:translateY(-6px);box-shadow:0 24px 50px var(--shadow)}
+.lore-card::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:4px;
+  background:var(--vermilion);
+  transform:scaleX(0);transform-origin:left;transition:transform .5s;
+}
+.lore-card:hover::before{transform:scaleX(1)}
+.lore-card .ghost-kanji-big{
+  position:absolute;bottom:-4rem;right:-1rem;
+  font-family:var(--f-display);font-size:14rem;font-weight:800;
+  color:var(--vermilion);opacity:.06;
+  pointer-events:none;line-height:.85;
+}
+.lore-card-head{
+  display:flex;align-items:center;gap:1rem;
+  margin-bottom:1.5rem;
+  padding-bottom:1.2rem;
+  border-bottom:1px solid var(--line);
+}
+.lore-card-head .num{
+  width:50px;height:50px;
+  background:var(--vermilion);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--f-display);font-size:1.4rem;font-weight:700;
+  flex-shrink:0;
+}
+.lore-card-head h3{
+  font-family:var(--f-display);font-size:1.3rem;font-weight:700;
+  letter-spacing:.05em;
+}
+.lore-card-head h3 small{
+  display:block;font-size:.6rem;letter-spacing:.4em;
+  color:var(--vermilion);font-weight:500;margin-bottom:.2rem;
+}
+
+.lore-sub-list{display:flex;flex-direction:column;gap:1.2rem;position:relative;z-index:2}
+.lore-sub-item{
+  padding-left:1rem;
+  border-left:2px solid var(--line);
+  transition:border-color .3s;
+}
+.lore-sub-item:hover{border-left-color:var(--vermilion)}
+.lore-sub-item h4{
+  font-family:var(--f-display);font-size:1rem;font-weight:600;
+  margin-bottom:.4rem;letter-spacing:.05em;
+}
+.lore-sub-item h4 .badge{
+  display:inline-block;
+  background:var(--gold);color:var(--paper);
+  font-size:.55rem;letter-spacing:.2em;
+  padding:.15rem .5rem;
+  margin-left:.4rem;vertical-align:middle;font-weight:500;
+  font-family:var(--f-mono);
+}
+.lore-sub-item h4 .badge.danger{background:var(--vermilion-deep);color:#fff}
+.lore-sub-item h4 .badge.indigo{background:var(--indigo);color:#fff}
+.lore-sub-item p{
+  font-size:.82rem;line-height:1.65;color:var(--ink-soft);
+}
+
+/* 세계관 메인 카드 (타카마가하라/요괴) */
+.lore-rank-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:.5rem;
+  margin-top:1rem;
+}
+.rank-pill{
+  text-align:center;
+  padding:.5rem .3rem;
+  background:linear-gradient(180deg, var(--bg-2), transparent);
+  border:1px solid var(--line);
+  font-family:var(--f-display);font-size:.7rem;
+  display:flex;flex-direction:column;gap:.2rem;
+}
+.rank-pill .rank-num{
+  font-family:var(--f-mono);font-size:.55rem;
+  letter-spacing:.2em;color:var(--vermilion);
+}
+.rank-pill .rank-name{font-weight:600;font-size:.75rem}
+.rank-pill .rank-jp{font-size:.55rem;letter-spacing:.2em;color:var(--ink-soft)}
+
+/* 신재대제 박스 */
+.festival-box{
+  margin-top:1.2rem;
+  padding:1rem 1.2rem;
+  background:linear-gradient(135deg, rgba(176,136,65,.1), transparent);
+  border:1px dashed var(--gold);
+  position:relative;
+}
+.festival-box::before{
+  content:"祭";position:absolute;top:-12px;left:1rem;
+  background:var(--paper);padding:0 .5rem;
+  font-family:var(--f-display);font-size:.85rem;color:var(--gold);font-weight:700;
+}
+.festival-box strong{
+  display:block;font-family:var(--f-display);font-size:.9rem;font-weight:600;
+  margin-bottom:.3rem;letter-spacing:.05em;
+}
+.festival-box p{font-size:.78rem;line-height:1.6;color:var(--ink-soft)}
+
+/* ================================================
+   푸터
+================================================ */
+footer{
+  background:var(--ink);color:var(--bg);
+  padding:5rem 3rem 2rem;
+  position:relative;z-index:2;
+}
+.footer-top{
+  display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:3rem;
+  padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.1);
+}
+.footer-brand h3{
+  font-family:var(--f-display);font-size:1.5rem;font-weight:700;
+  letter-spacing:.1em;margin-bottom:.5rem;
+}
+.footer-brand small{font-family:var(--f-display);font-size:.7rem;letter-spacing:.4em;opacity:.6}
+.footer-brand p{font-size:.85rem;line-height:1.8;opacity:.7;margin-top:1rem;max-width:280px}
+
+.footer-col h4{
+  font-family:var(--f-display);font-size:.75rem;letter-spacing:.4em;
+  color:var(--vermilion);margin-bottom:1.2rem;text-transform:uppercase;
+}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.7rem}
+.footer-col a{
+  color:var(--bg);opacity:.7;text-decoration:none;font-size:.85rem;
+  transition:opacity .3s;
+}
+.footer-col a:hover{opacity:1}
+.footer-bottom{
+  padding-top:2rem;
+  display:flex;justify-content:space-between;
+  font-family:var(--f-mono);font-size:.7rem;letter-spacing:.3em;
+  opacity:.5;
+}
+
+/* ================================================
+   플로팅 BGM 컨트롤
+================================================ */
+.bgm-control{
+  position:fixed;bottom:2rem;right:2rem;z-index:50;
+  background:var(--paper);
+  border:1px solid var(--line);
+  padding:.8rem 1.2rem;
+  display:flex;align-items:center;gap:1rem;
+  box-shadow:0 8px 24px var(--shadow);
+  font-family:var(--f-display);font-size:.8rem;
+  transition:all .3s ease;
+}
+.bgm-control .dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--vermilion);
+  animation:pulse 1.5s infinite;
+}
+/* 음악이 꺼져있을 때 — 회색 점, 애니메이션 없음 */
+.bgm-control.muted .dot{
+  background:var(--ink-soft);
+  animation:none;
+  opacity:.4;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.bgm-control button{background:transparent;border:none;font-size:1rem;color:var(--ink);padding:.2rem .4rem;transition:color .25s}
+.bgm-control button:hover{color:var(--vermilion)}
+#bgmLabel{cursor:pointer;user-select:none}
+
+/* BGM 선택 메뉴 (펼침) */
+.bgm-menu{
+  position:fixed;bottom:5.5rem;right:2rem;z-index:51;
+  background:var(--paper);
+  border:1px solid var(--ink);
+  padding:1rem;
+  display:none;
+  flex-direction:column;gap:.5rem;
+  box-shadow:8px 8px 0 var(--shadow);
+  font-family:var(--f-display);
+  min-width:180px;
+}
+.bgm-menu.show{display:flex;animation:fadeUp .3s ease}
+.bgm-menu::before{
+  content:"音 / SELECT";
+  position:absolute;top:-9px;left:50%;transform:translateX(-50%);
+  background:var(--bg);padding:0 .8rem;
+  font-family:var(--f-mono);font-size:.6rem;letter-spacing:.3em;color:var(--ink-soft);
+}
+.bgm-menu-btn{
+  background:transparent;border:1px solid var(--line);
+  padding:.6rem .9rem;
+  font-family:var(--f-display);font-size:.85rem;color:var(--ink);
+  display:flex;align-items:center;gap:.6rem;
+  transition:all .25s;
+  text-align:left;
+}
+.bgm-menu-btn:hover, .bgm-menu-btn.active{
+  background:var(--vermilion);color:#fff;border-color:var(--vermilion);
+}
+.bgm-menu-btn .ico{font-size:1rem}
+.bgm-menu-btn small{font-size:.55rem;letter-spacing:.2em;opacity:.7;display:block;margin-top:.1rem}
+
+/* 클릭 리플 */
+.click-ripple{
+  position:fixed;border-radius:50%;
+  border:2px solid var(--vermilion);
+  pointer-events:none;z-index:9990;
+  animation:rippleExpand .8s ease-out forwards;
+}
+@keyframes rippleExpand{
+  0%{width:0;height:0;opacity:1;transform:translate(-50%,-50%)}
+  100%{width:120px;height:120px;opacity:0;transform:translate(-50%,-50%)}
+}
+
+/* ================================================
+   반응형
+================================================ */
+@media(max-width:1100px){
+  .hero{grid-template-columns:1fr;padding:7rem 2rem 4rem}
+  .hero-right{height:400px}
+  .char-grid{grid-template-columns:1fr 1fr}
+  .world-grid{grid-template-columns:1fr;gap:3rem}
+  .world-left{position:static}
+  .shrine-grid{grid-template-columns:1fr;gap:3rem}
+  .lore-cards-wrap{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+  nav ul{display:none}
+  body, a, button, .clickable{cursor:auto}
+  .cursor-main, .cursor-trail{display:none}
+}
+@media(max-width:640px){
+  header{padding:1rem 1.5rem}
+  section{padding:5rem 1.5rem}
+  .hero{padding:6rem 1.5rem 3rem}
+  .char-grid{grid-template-columns:1fr}
+  .pin-guide{grid-template-columns:repeat(2,1fr)}
+  .lore-rank-grid{grid-template-columns:repeat(2,1fr)}
+  .map-popup{width:200px;padding:1rem}
+  /* 로더 모바일 최적화 — 한 화면에 다 들어가게 */
+  #loader{gap:1rem;padding:1.5rem 1rem;justify-content:flex-start;padding-top:3rem}
+  #loader::before{font-size:8rem}
+  .torii-wrap{width:200px;height:170px}
+  .loader-kanji{font-size:.7rem;letter-spacing:.4em}
+  .loader-title{font-size:2.2rem;letter-spacing:.1em}
+  .loader-title::after{font-size:.65rem;bottom:-1.2rem}
+  .loader-sub{margin-top:.8rem;font-size:.7rem;line-height:1.7}
+  .bgm-choice{margin-top:.8rem;padding:.7rem .8rem;gap:.5rem;flex-wrap:wrap;justify-content:center}
+  .bgm-btn{padding:.5rem .7rem;font-size:.78rem}
+  .bgm-btn small{font-size:.55rem}
+  .enter-btn{margin-top:.5rem;padding:.85rem 2.5rem;font-size:.78rem;letter-spacing:.3em}
+  /* 모바일 BGM 컨트롤 — 작게 + 위치 조정 */
+  .bgm-control{bottom:1rem;right:1rem;padding:.6rem .9rem;font-size:.7rem;gap:.7rem}
+  .bgm-menu{bottom:4rem;right:1rem;padding:.8rem;min-width:150px}
+  .bgm-menu-btn{padding:.5rem .7rem;font-size:.78rem}
+}
+</style>
+</head>
+<body>
+<!-- BGM 오디오 -->
+<audio id="bgmDay" src="assets/audio/bgm-day.mp3" loop preload="auto"></audio>
+<audio id="bgmNight" src="assets/audio/bgm-night.mp3" loop preload="auto"></audio>
+
+<!-- 커스텀 커서 -->
+<div class="cursor-main" id="cursorMain"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
+
+<!-- ============= 로딩 화면 ============= -->
+<div id="loader">
+  <div class="loader-kanji">玉 ・ 夜 ・ 稲 ・ 荷</div>
+  <div class="torii-wrap">
+    <svg viewBox="0 0 340 300" xmlns="http://www.w3.org/2000/svg">
+      <g class="torii-stroke" fill="none" stroke="var(--vermilion)" stroke-width="6" stroke-linecap="round">
+        <path d="M 30 70 Q 170 50 310 70 L 305 95 Q 170 80 35 95 Z" fill="var(--vermilion)"/>
+        <rect x="55" y="115" width="230" height="18" fill="var(--vermilion)"/>
+        <path d="M 75 95 L 70 270" stroke-width="14"/>
+        <path d="M 265 95 L 270 270" stroke-width="14"/>
+        <rect x="150" y="100" width="40" height="20" fill="var(--paper)" stroke-width="2"/>
+      </g>
+    </svg>
+  </div>
+  <div class="loader-title">玉夜稲荷</div>
+  <div class="loader-sub">
+    경계의 신사에 어서 오십시오<br>
+    <small style="opacity:.5">— ENTER THE SHRINE —</small>
+  </div>
+
+  <div class="bgm-choice">
+    <button class="bgm-btn" data-bgm="day"><span class="ico">☀</span><span>晝<small>DAY THEME</small></span></button>
+    <button class="bgm-btn" data-bgm="night"><span class="ico">☾</span><span>夜<small>NIGHT THEME</small></span></button>
+    <button class="bgm-btn" data-bgm="off"><span class="ico">✕</span><span>無音<small>SILENT</small></span></button>
+  </div>
+
+  <button class="enter-btn" id="enterBtn">참배하기 ・ 入る</button>
+</div>
+
+<!-- ============= 헤더 ============= -->
+<header>
+  <div class="brand">
+    <div class="brand-mark">玉</div>
+    <div class="brand-text">
+      <small>TAMAYO INARI</small>
+      <strong>玉夜稲荷</strong>
+    </div>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="#hero">緣起<small>STORY</small></a></li>
+      <li><a href="#characters">登場神<small>CAST</small></a></li>
+      <li><a href="#shrine">神社<small>SHRINE</small></a></li>
+      <li><a href="#world">世界觀<small>WORLD</small></a></li>
+    </ul>
+  </nav>
+  <div class="day-night-toggle">
+    <button class="dn-btn active" data-mode="day">☀</button>
+    <button class="dn-btn" data-mode="night">☾</button>
+  </div>
+</header>
+
+<!-- ============= 히어로 ============= -->
+<section class="hero" id="hero">
+  <div class="kanji-deco" id="kanjiDeco">境界</div>
+
+  <!-- 떨어지는 꽃잎 -->
+  <div class="petals">
+    <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+    <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+    <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+    <span class="petal"></span>
+  </div>
+
+  <div class="hero-left">
+    <div class="hero-eyebrow">URBAN FANTASY ・ OCCULT ・ ROM-COM</div>
+    <h1>
+      <span class="accent-day">낮</span>에는 <span class="accent-day">소원</span>을 접수하고,<br>
+      <span class="accent-night">밤</span>에는 <span class="accent-night">경계</span>를 봉합한다.
+      <span class="small-jp">晝に願ひを、夜に境を</span>
+    </h1>
+    <p class="hero-desc">
+      타마요 이나리 신사는 이승과 은세 사이의 틈에 끼워둔, 영적인 <span class="em-night">도어스토퍼</span>다. 참배객이 줄고 재개발이 다가올수록, 도쿄의 이상현상들은 <span class="em-day">임대료 싼 동네를 찾는 자취생처럼</span> 이 조용한 언덕으로 슬금슬금 모여든다.
+    </p>
+    <div class="hero-meta">
+      <div class="meta-item"><small>GENRE</small><strong>어반판타지 / 퇴마</strong></div>
+      <div class="meta-item"><small>SETTING</small><strong>2026 ・ 東京</strong></div>
+      <div class="meta-item"><small>RATING</small><strong>15+ ・ Romance</strong></div>
+      <div class="meta-item"><small>STATUS</small><strong>連載中</strong></div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="torii-glow"></div>
+    <div class="spirits">
+      <span class="spirit"></span><span class="spirit"></span><span class="spirit"></span>
+      <span class="spirit"></span><span class="spirit"></span>
+      <span class="spirit"></span><span class="spirit"></span>
+    </div>
+    <div class="big-torii">
+      <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="tg" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="var(--vermilion)"/>
+            <stop offset="1" stop-color="var(--vermilion-deep)"/>
+          </linearGradient>
+        </defs>
+        <path d="M 20 80 Q 200 50 380 80 L 375 115 Q 200 90 25 115 Z" fill="url(#tg)"/>
+        <rect x="55" y="155" width="290" height="22" fill="url(#tg)"/>
+        <path d="M 90 115 L 75 460" stroke="url(#tg)" stroke-width="22" stroke-linecap="round" fill="none"/>
+        <path d="M 310 115 L 325 460" stroke="url(#tg)" stroke-width="22" stroke-linecap="round" fill="none"/>
+        <rect x="50" y="455" width="60" height="14" fill="var(--ink)" opacity=".7"/>
+        <rect x="290" y="455" width="60" height="14" fill="var(--ink)" opacity=".7"/>
+        <rect x="170" y="135" width="60" height="32" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/>
+        <text x="200" y="158" text-anchor="middle" font-family="var(--f-display)" font-size="14" fill="var(--vermilion)" font-weight="800">稲荷</text>
+        <path d="M 60 140 Q 200 130 340 140" stroke="var(--ink)" stroke-width="3" fill="none" opacity=".4"/>
+        <path d="M 130 140 L 125 175 L 135 165 L 130 185" stroke="var(--paper)" stroke-width="2" fill="var(--paper)" opacity=".9"/>
+        <path d="M 270 140 L 265 175 L 275 165 L 270 185" stroke="var(--paper)" stroke-width="2" fill="var(--paper)" opacity=".9"/>
+      </svg>
+    </div>
+    <div class="ofuda ofuda-1">封印・護</div>
+    <div class="ofuda ofuda-2">玉夜稲荷</div>
+  </div>
+</section>
+
+<!-- 세이가이하 디바이더 -->
+<div class="seigaiha"></div>
+
+<!-- ============= 캐릭터 ============= -->
+<section id="characters">
+  <div class="section-head reveal">
+    <div>
+      <div class="section-eyebrow">登場 ・ CAST</div>
+      <h2 class="section-title">
+        신사에 깃든 자들
+        <span class="jp">SHINSHA NO KAMIGAMI</span>
+      </h2>
+    </div>
+    <p class="section-desc">
+      허름한 신사 한 채에 모여든 신과 요괴들. 자수성가한 여우신, 폭풍의 무신, 그리고 뱀의 사자 — 각자의 사정으로 한 지붕 아래 살게 된 이들의 기록.
+    </p>
+  </div>
+
+  <div class="char-grid reveal-stagger">
+
+    <!-- 타마오 -->
+    <article class="char-card" data-c="tamao" data-modal="tamao">
+      <div class="view-detail">CLICK ・ 詳細</div>
+      <span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+      <div class="char-card-top">
+        <div class="char-id">№ 001 / 主神</div>
+        <div class="char-rarity"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <div class="char-kanji-bg">玉</div>
+        <div class="char-portrait">
+          <img src="assets/images/characters/tamao-card.webp"
+               alt="이누가미 타마오"
+               class="char-portrait-img">
+        </div>
+        <div class="power-bar">
+          <div class="power-bar-label"><span>神 力</span><span>SS+</span></div>
+          <div class="power-bar-track"><div class="power-bar-fill" style="width:92%"></div></div>
+        </div>
+      </div>
+      <div class="char-card-body">
+        <div class="char-name-jp">いぬがみ ・ たまお</div>
+        <h3 class="char-name">犬神 玉緒</h3>
+        <p class="char-role">— 미혹·지혜의 여우신, 신사 主神</p>
+        <div class="char-stats">
+          <div class="stat-row"><span class="stat-label">AGE</span><span class="stat-val">500</span></div>
+          <div class="stat-row"><span class="stat-label">RANK</span><span class="stat-val">신(나리아가리)</span></div>
+          <div class="stat-row"><span class="stat-label">MBTI</span><span class="stat-val">ENTJ-A</span></div>
+          <div class="stat-row"><span class="stat-label">SIGN</span><span class="stat-val">3w4</span></div>
+        </div>
+        <div class="char-tags">
+          <span class="tag primary">主神</span>
+          <span class="tag">완벽주의</span>
+          <span class="tag">츤데레</span>
+          <span class="tag gold">우렁각시</span>
+        </div>
+        <p class="char-quote">흥, 착각하지 마. 그저 네가 한심해서 도와주는 것뿐이잖아.</p>
+      </div>
+    </article>
+
+    <!-- 스사노오 -->
+    <article class="char-card" data-c="susano" data-modal="susano">
+      <div class="view-detail">CLICK ・ 詳細</div>
+      <span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+      <div class="char-card-top">
+        <div class="char-id">№ 002 / 武神</div>
+        <div class="char-rarity"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <div class="char-kanji-bg">嵐</div>
+        <div class="char-portrait">
+          <img src="assets/images/characters/susano-card.webp"
+               alt="스사노오 미코토"
+               class="char-portrait-img">
+        </div>
+        <div class="power-bar">
+          <div class="power-bar-label"><span>神 力</span><span>EX</span></div>
+          <div class="power-bar-track"><div class="power-bar-fill" style="width:99%"></div></div>
+        </div>
+      </div>
+      <div class="char-card-body">
+        <div class="char-name-jp">スサノオ ・ ノミコト</div>
+        <h3 class="char-name">須佐之男命</h3>
+        <p class="char-role">— 폭풍·바다의 무신, 자칭 식객</p>
+        <div class="char-stats">
+          <div class="stat-row"><span class="stat-label">AGE</span><span class="stat-val">不明 ・ ∞</span></div>
+          <div class="stat-row"><span class="stat-label">RANK</span><span class="stat-val">신(아마츠카미·삼귀자)</span></div>
+          <div class="stat-row"><span class="stat-label">MBTI</span><span class="stat-val">ESTP-A</span></div>
+          <div class="stat-row"><span class="stat-label">SIGN</span><span class="stat-val">9w8</span></div>
+        </div>
+        <div class="char-tags">
+          <span class="tag primary">武神</span>
+          <span class="tag">能글</span>
+          <span class="tag">한량</span>
+          <span class="tag gold">파칭코派</span>
+        </div>
+        <p class="char-quote">에이 너무하네— 잠깐 누워있던 거 가지고 그렇게까지.</p>
+      </div>
+    </article>
+
+    <!-- 야마타 오로치 -->
+    <article class="char-card" data-c="orochi" data-modal="orochi">
+      <div class="view-detail">CLICK ・ 詳細</div>
+      <span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+      <div class="char-card-top">
+        <div class="char-id">№ 003 / 使者</div>
+        <div class="char-rarity"><span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span></div>
+        <div class="char-kanji-bg">蛇</div>
+        <div class="char-portrait">
+          <img src="assets/images/characters/orochi-card.webp"
+               alt="야마타 오로치"
+               class="char-portrait-img">
+        </div>
+        <div class="power-bar">
+          <div class="power-bar-label"><span>神 力</span><span>S</span></div>
+          <div class="power-bar-track"><div class="power-bar-fill" style="width:78%"></div></div>
+        </div>
+      </div>
+      <div class="char-card-body">
+        <div class="char-name-jp">やまた ・ おろち</div>
+        <h3 class="char-name">八岐大蛇</h3>
+        <p class="char-role">— 뱀요괴 출신 신령, 스사노오의 사자</p>
+        <div class="char-stats">
+          <div class="stat-row"><span class="stat-label">AGE</span><span class="stat-val">1,000</span></div>
+          <div class="stat-row"><span class="stat-label">RANK</span><span class="stat-val">신령</span></div>
+          <div class="stat-row"><span class="stat-label">MBTI</span><span class="stat-val">ISFJ-T</span></div>
+          <div class="stat-row"><span class="stat-label">SIGN</span><span class="stat-val">2w1</span></div>
+        </div>
+        <div class="char-tags">
+          <span class="tag primary">使者</span>
+          <span class="tag">無口</span>
+          <span class="tag">大型犬</span>
+          <span class="tag gold">家計簿</span>
+        </div>
+        <p class="char-quote">...영양소가 부족합니다. 이것을 드십시오. 다 드실 때까지 보겠습니다.</p>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<div class="seigaiha"></div>
+
+<!-- ============= 신사 (단독 섹션) ============= -->
+<section id="shrine">
+  <div class="section-head reveal">
+    <div>
+      <div class="section-eyebrow">神社 ・ THE SHRINE</div>
+      <h2 class="section-title">
+        타마요 이나리 신사
+        <span class="jp">TAMAYO INARI JINJA</span>
+      </h2>
+    </div>
+    <p class="section-desc">
+      낮에는 <span style="color:var(--gold);font-weight:600">소원</span>을, 밤에는 <span style="color:var(--vermilion);font-weight:600">경계</span>를 — 한 신사가 동시에 두 업무를 굴리는 사연.
+    </p>
+  </div>
+
+  <div class="shrine-grid">
+
+    <!-- 좌측: 신사 설명 -->
+    <div class="shrine-intro reveal">
+      <h3><span class="label-dot"></span>位置と外觀 ・ 위치와 외관</h3>
+      <p>
+        도쿄도 <strong>세타가야구</strong>, 토도로키 계곡 근처 언덕배기. 토도로키역에서 도보 15분 거리이며, 주변은 단독주택과 소형 맨션이 어색한 동거 중인 조용한 주택가다. 구글 지도가 <span class="em-night">"목적지가 근처에 있습니다"</span>라고 안내한 후 사용자를 정확히 막다른 골목으로 인도하는, 그런 종류의 입지다.
+      </p>
+      <p>
+        이끼 낀 석등과 작은 여우 석상이 늘어선 오모테산도(앞참배길)를 따라 올라가면 첫 번째 도리이가 등장한다. 현판에는 '稲荷神社'라는 글자가, 마치 <span class="em-day">80년대에 새겨진 후로 한 번도 다시 칠해진 적 없다</span>는 사실을 정직하게 고백하는 색조로 박혀 있다.
+      </p>
+
+      <h3 style="margin-top:2.5rem"><span class="label-dot"></span>本質と眞の役割 ・ 본질과 진짜 역할</h3>
+      <p>
+        표면적으로는 평범한 이나리 신사다. 그러나 진짜 정체는 <span class="em-night">이승과 은세의 경계 봉인 시설</span>. 인간의 부패한 기원이 악귀로 변태하기 전에 정화하고, 은세에서 이승으로 무단월경한 존재들을 감시·처리하는 것이 본업이다. <span class="em-day">부적 판매는 부업, 사실은 매우 중요한 부업이다.</span> 전기세는 신앙으로 낼 수 없기 때문이다.
+      </p>
+
+      <!-- 신사 메타 정보 -->
+      <dl class="shrine-meta-table">
+        <div class="shrine-meta-row"><dt>所在地</dt><dd>도쿄도 세타가야구 ・ 토도로키 계곡 인근</dd></div>
+        <div class="shrine-meta-row"><dt>主神</dt><dd>玉夜稲荷大神 (타마요이나리오오카미)</dd></div>
+        <div class="shrine-meta-row"><dt>御利益</dt><dd>미혹 ・ 지혜 ・ 경계 ・ 액막이 ・ 숨은 인연</dd></div>
+        <div class="shrine-meta-row"><dt>御神體</dt><dd>은거울(銀鏡) — 본전에 봉안</dd></div>
+        <div class="shrine-meta-row"><dt>運營</dt><dd>晝 = 신사 부흥 / 夜 = 경계 유지·퇴마</dd></div>
+        <div class="shrine-meta-row"><dt>同居人</dt><dd>三名 (主神 1 + 食客 1 + 使者 1)</dd></div>
+      </dl>
+
+      <!-- 경고 스트립 -->
+      <div class="warning-strip">
+        <strong>⚠ 現況 ・ 경고</strong>
+        참배객 감소와 인근 재개발 압박으로 신역이 야금야금 침식 중. 결계는 <span class="em-night">'곧 점검이 필요한 보일러' 수준</span>의 안정성을 보이며, 도쿄 각지의 이상현상이 약해진 봉인의 틈을 귀신같이 알아채고 슬금슬금 흘러들고 있다.
+      </div>
+    </div>
+
+    <!-- 우측: 인터랙티브 경내 지도 -->
+    <div class="shrine-map reveal">
+      <div class="shrine-map-title">
+        境內圖 ・ 경내도
+        <small>CLICK THE PINS ・ 핀을 클릭해보세요</small>
+      </div>
+
+      <div class="map-container" id="mapContainer">
+
+        <!-- 배경 이미지 컨테이너 (이미지만 잘림, 팝업은 바깥으로 펼쳐질 수 있음) -->
+        <div class="map-bg">
+          <!-- TODO: 깃허브 연결 시 .map-bg의 background-image 활성화 후 이 placeholder 삭제 -->
+          
+        </div>
+
+        <!-- 핀 1: 오모테산도 (하단 도리이 앞) -->
+        <div class="map-pin" data-pin="1" style="left:50%; top:92%">
+          <div class="pin-circle">①</div>
+          <div class="pin-label">表參道</div>
+          <div class="map-popup pos-tl">
+            <button class="popup-close">✕</button>
+            <div class="popup-num">①</div>
+            <div class="popup-title">오모테산도</div>
+            <div class="popup-jp">OMOTESANDOU ・ 表參道</div>
+            <div class="popup-desc">언덕 아래 골목 끝에서부터 본전까지 이어지는 돌계단 길. 양쪽으로 이끼 낀 석등이 도열해 있는데, 이 이끼는 타마오의 결벽증과 '석등의 풍취는 이끼에서 나온다'는 미적 신념 사이에서 협상된 결과물이다. 매주 화요일이 협상 갱신일. 여우 석상들의 표정이 미묘하게 다 다르며, 자세히 보면 한 마리는 분명히 비웃고 있다.</div>
+          </div>
+        </div>
+
+        <!-- 핀 2: 데미즈야 (좌하단) -->
+        <div class="map-pin" data-pin="2" style="left:19%; top:65%">
+          <div class="pin-circle">②</div>
+          <div class="pin-label">手水舍</div>
+          <div class="map-popup pos-br">
+            <button class="popup-close">✕</button>
+            <div class="popup-num">②</div>
+            <div class="popup-title">데미즈야</div>
+            <div class="popup-jp">TEMIZUYA ・ 手水舍</div>
+            <div class="popup-desc">작은 용머리 수구가 졸졸 물을 흘리는 정화 시설. 용머리는 오로치가 매주 직접 닦는다. 그는 이 일에 묘한 동족 의식을 느끼는 것 같지만, 본인은 결코 인정하지 않는다.</div>
+          </div>
+        </div>
+
+        <!-- 핀 3: 배전 (가운데 본당) -->
+        <div class="map-pin" data-pin="3" style="left:46%; top:50%">
+          <div class="pin-circle">③</div>
+          <div class="pin-label">拜殿</div>
+          <div class="map-popup pos-br">
+            <button class="popup-close">✕</button>
+            <div class="popup-num">③</div>
+            <div class="popup-title">배전</div>
+            <div class="popup-jp">HAIDEN ・ 拜殿</div>
+            <div class="popup-desc">방울 줄이 늘어진 참배 공간. 나무 바닥은 늘 윤이 나며, 이는 타마오가 새벽마다 직접 닦기 때문이다. 그는 이를 '신격의 의무'라 주장하지만 오로치는 '결벽증의 발현'이라 가계부 비고란에 기록해두었다.</div>
+          </div>
+        </div>
+
+        <!-- 핀 4: 본전 (위쪽 작은 본당) -->
+        <div class="map-pin" data-pin="4" style="left:46%; top:17%">
+          <div class="pin-circle">④</div>
+          <div class="pin-label">本殿</div>
+          <div class="map-popup pos-br">
+            <button class="popup-close">✕</button>
+            <div class="popup-num">④</div>
+            <div class="popup-title">본전</div>
+            <div class="popup-jp">HONDEN ・ 本殿</div>
+            <div class="popup-desc">신체(神體)인 은거울이 모셔진 가장 안쪽 공간. 이 거울은 타마오가 요괴 시절부터 소지해온 물건으로, 신격화 이전 시기의 그를 비춘 유일한 물증이기도 하다. 평소에는 비단 천으로 덮여 있다.</div>
+          </div>
+        </div>
+
+        <!-- 핀 5: 사무소 (우하단 부적 가게) -->
+        <div class="map-pin" data-pin="5" style="left:82%; top:70%">
+          <div class="pin-circle">⑤</div>
+          <div class="pin-label">社務所</div>
+          <div class="map-popup pos-bl">
+            <button class="popup-close">✕</button>
+            <div class="popup-num">⑤</div>
+            <div class="popup-title">사무소 / 부적판매소</div>
+            <div class="popup-jp">SHAMUSHO ・ 社務所</div>
+            <div class="popup-desc">낮 영업의 핵심 거점. 액막이·연애성취 오마모리, 여우 키링, 에마가 진열되어 있으며, 가격표는 타마오의 손글씨다. 그의 글씨는 너무 단정해서 오히려 비현실적이다.</div>
+          </div>
+        </div>
+
+        <!-- 핀 6: 살림채 (좌측 큰 가옥) -->
+        <div class="map-pin" data-pin="6" style="left:16%; top:25%">
+          <div class="pin-circle">⑥</div>
+          <div class="pin-label">住居</div>
+          <div class="map-popup pos-br">
+            <button class="popup-close">✕</button>
+            <div class="popup-num">⑥</div>
+            <div class="popup-title">신사 살림채</div>
+            <div class="popup-jp">JUUKYO ・ 住居</div>
+            <div class="popup-desc">다다미방 여러 개, 부엌, 툇마루, 목욕탕, 창고로 구성된 동거 공간. 스사노오는 주로 툇마루에서 점프 만화를 읽으며 발견되고, 오로치는 부엌에서 다크매터를 연성 중이다.</div>
+          </div>
+        </div>
+
+        <!-- 핀 7: 뒤뜰/연못 (우상단 벚나무+연못) -->
+        <div class="map-pin" data-pin="7" style="left:83%; top:22%">
+          <div class="pin-circle">⑦</div>
+          <div class="pin-label">裏庭</div>
+          <div class="map-popup pos-bl">
+            <button class="popup-close">✕</button>
+            <div class="popup-num">⑦</div>
+            <div class="popup-title">뒤뜰 / 소연못</div>
+            <div class="popup-jp">URANIWA ・ 裏庭</div>
+            <div class="popup-desc">작은 연못과 늙은 벚나무 한 그루. 봄에는 벚꽃이, 여름에는 모기가, 겨울에는 타마오의 한숨이 흩날린다.</div>
+          </div>
+        </div>
+
+        <!-- 핀 8: 요마이도 (우측 위 작은 도리이) -->
+        <div class="map-pin" data-pin="8" style="left:66%; top:11%">
+          <div class="pin-circle">⑧</div>
+          <div class="pin-label">夜參道</div>
+          <div class="map-popup pos-br">
+            <button class="popup-close">✕</button>
+            <div class="popup-num">⑧</div>
+            <div class="popup-title">요마이도 (뒷문)</div>
+            <div class="popup-jp">YOMAIDOU ・ 夜參道</div>
+            <div class="popup-desc">금줄이 쳐진, 살림채 안쪽 깊숙한 곳에 숨어있는 작은 문. 새벽 2시 이후 은세와 직접 연결되며, 평상시에는 결계 부적이 겹겹이 봉해져 있다. 이 신사의 진짜 심장부.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 핀 가이드 -->
+      <div class="pin-guide">
+        <div class="pin-guide-item" data-jump="1"><div class="pin-guide-num">①</div>表參道</div>
+        <div class="pin-guide-item" data-jump="2"><div class="pin-guide-num">②</div>手水舍</div>
+        <div class="pin-guide-item" data-jump="3"><div class="pin-guide-num">③</div>拜殿</div>
+        <div class="pin-guide-item" data-jump="4"><div class="pin-guide-num">④</div>本殿</div>
+        <div class="pin-guide-item" data-jump="5"><div class="pin-guide-num">⑤</div>社務所</div>
+        <div class="pin-guide-item" data-jump="6"><div class="pin-guide-num">⑥</div>住居</div>
+        <div class="pin-guide-item" data-jump="7"><div class="pin-guide-num">⑦</div>裏庭</div>
+        <div class="pin-guide-item" data-jump="8"><div class="pin-guide-num">⑧</div>夜參道</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="seigaiha"></div>
+
+<!-- ============= 세계관 (요괴 + 타카마가하라) ============= -->
+<section id="world">
+  <div class="section-head reveal">
+    <div>
+      <div class="section-eyebrow">世界觀 ・ LORE</div>
+      <h2 class="section-title">
+        경계가 흐려진 밤의 도쿄.
+        <span class="jp">SAKAI NO TOKYO</span>
+      </h2>
+    </div>
+    <p class="section-desc">
+      은세(隠世)와 이승의 경계가 약해지고 있다. 재개발로 사라진 신역, 잊힌 옛 신사들, 그 틈으로 흘러들어오는 것들 — 이 모든 것의 마지막 봉인이 도쿄 한구석의 작은 신사다.
+    </p>
+  </div>
+
+  <!-- 메인 카드 2개: 요괴 / 타카마가하라 -->
+  <div class="lore-cards-wrap reveal-stagger">
+
+    <!-- 요괴 / 악귀 / 타락신 -->
+    <div class="lore-card">
+      <div class="ghost-kanji-big">妖</div>
+      <div class="lore-card-head">
+        <div class="num">妖</div>
+        <h3>
+          <small>YOKAI ・ AKKI ・ DARK SPECTRUM</small>
+          요괴 ・ 악귀 ・ 타락신
+        </h3>
+      </div>
+
+      <div class="lore-sub-list">
+        <div class="lore-sub-item">
+          <h4>요괴 (妖怪) <span class="badge">中性</span></h4>
+          <p>오래된 이야기, 장소의 기척, 인간의 두려움, 소문, 물건 — 이런 것들이 오랜 시간 영성을 축적하면 태어난다. 선악이 고정되어 있지 않으며, 무해한 장난꾼부터 인간을 포식하는 종까지 다양하다. 평소엔 은세에 거주하지만 오래된 장소가 훼손되거나, 금기가 깨지거나, 이름이 반복 호명되거나, 소문이 확산될 때 이승에 출현한다.</p>
+        </div>
+
+        <div class="lore-sub-item">
+          <h4>악귀 (惡鬼) <span class="badge danger">DANGER</span></h4>
+          <p>뒤틀린 기원, 원한, 저주, 탐욕, 공포 — 이것들이 부패해서 형체를 얻으면 악귀가 된다. 인간의 생기와 감정을 흡식하며, 신사의 기원을 오염시키고, 도시 괴담의 형태로 증식한다. 퇴마하지 않으면 주변까지 오염시킨다. 신사의 밤 업무 대부분을 차지하는 단골손님.</p>
+        </div>
+
+        <div class="lore-sub-item">
+          <h4>타락신 (墮神) <span class="badge danger">RARE</span></h4>
+          <p>본래 신이었으나 이름과 신역, 봉납과 기원을 모두 잃고 무너진 존재. 수는 적지만 악귀보다 강하고, 요괴보다 원한이 깊다. 가장 까다로운 상대이며, 종종 타마오에게 <span style="color:var(--vermilion);font-style:italic">"미래의 너 자신을 보는 듯한"</span> 불쾌감을 주기도 한다.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 타카마가하라 -->
+    <div class="lore-card">
+      <div class="ghost-kanji-big">天</div>
+      <div class="lore-card-head">
+        <div class="num">天</div>
+        <h3>
+          <small>TAKAMAGAHARA ・ HIGH PLANE</small>
+          타카마가하라
+        </h3>
+      </div>
+
+      <div class="lore-sub-list">
+        <div class="lore-sub-item">
+          <h4>구조 (構造)</h4>
+          <p>신계 그 자체. 이승 위에 자리한 은세 상층 영역으로, 이승의 신사·사당·산·바다 등을 통해 연결된다. <span style="color:var(--gold);font-weight:600">고천의자리(高天の座)</span>는 상층부로 고위신이 거주하며, <span style="color:var(--gold);font-weight:600">야오요로즈의회랑</span>은 중층부로 대부분의 신이 활동하는 공간, <span style="color:var(--gold);font-weight:600">카게교엔(陰御園)</span>은 하층부에 해당한다.</p>
+        </div>
+
+        <div class="lore-sub-item">
+          <h4>신격 등급 <span class="badge indigo">5 RANKS</span></h4>
+          <div class="lore-rank-grid">
+            <div class="rank-pill">
+              <div class="rank-num">RANK 1</div>
+              <div class="rank-name">天津神</div>
+              <div class="rank-jp">아마츠카미</div>
+            </div>
+            <div class="rank-pill">
+              <div class="rank-num">RANK 2</div>
+              <div class="rank-name">國津神</div>
+              <div class="rank-jp">쿠니츠카미</div>
+            </div>
+            <div class="rank-pill">
+              <div class="rank-num">RANK 3</div>
+              <div class="rank-name">俗願神</div>
+              <div class="rank-jp">조쿠간카미</div>
+            </div>
+            <div class="rank-pill">
+              <div class="rank-num">RANK 4</div>
+              <div class="rank-name">成上神</div>
+              <div class="rank-jp">나리아가리</div>
+            </div>
+            <div class="rank-pill">
+              <div class="rank-num">RANK 5</div>
+              <div class="rank-name">名失</div>
+              <div class="rank-jp">나가케</div>
+            </div>
+          </div>
+          <p style="margin-top:.8rem">하늘 계열 고대신부터 토지·산·강 신, 세속의 소원을 수행하는 신, 요괴·인간·원령이 신격을 취득한 자수성가형 신, 그리고 신앙을 잃어 이름이 희미해진 신까지. 타마오는 <span style="color:var(--vermilion);font-weight:600">제4등급 나리아가리</span>에 해당한다.</p>
+        </div>
+
+        <!-- 신재대제 박스 -->
+        <div class="festival-box">
+          <strong>神在大祭 ・ 신재대제</strong>
+          <p>신들의 연회. 매년 음력 10월 무렵, 천경전에서 정기 개최. 인연 정산 ・ 재앙 배분 ・ 신역 분쟁 조정 ・ 신격 평가가 이루어진다. 자수성가형 신에게는 부담스러운 자리.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+<!-- ============= 캐릭터 상세 모달 ============= -->
+
+<!-- 1. 이누가미 타마오 모달 -->
+<div class="char-modal" id="modal-tamao">
+  <div class="char-modal-inner">
+    <button class="modal-close" data-close>✕</button>
+
+    <div class="modal-portrait" data-c="tamao">
+      <div class="modal-portrait-img">
+        <img src="assets/images/characters/tamao-full.webp"
+             alt="이누가미 타마오 전신"
+             class="modal-full-img">
+      </div>
+      <div class="modal-portrait-info">
+        <div class="mi-jp">いぬがみ ・ たまお</div>
+        <div class="mi-name">이누가미 타마오</div>
+        <div class="mi-name-kr">犬神 玉緒</div>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <div class="modal-id">№ 001 ・ 主神 ・ MAIN GOD</div>
+      <h3 class="modal-title">이누가미 타마오</h3>
+      <p class="modal-role">— 미혹·지혜의 여우신, 신사 主神</p>
+
+      <div class="modal-oneliner">
+        <small>한 줄 요약 ・ ONE-LINER</small>
+        <p>흙수저(요괴) 출신으로 자수성가한, 강박적인 결벽증을 앓는 <span class="em-night">신(神)세대 CEO</span>.</p>
+      </div>
+
+      <div class="modal-section">
+        <h4>프로필 <small>PROFILE</small></h4>
+        <p>
+          원래는 꼬리 아홉 개 달린 잘나가는 <span class="em-day">구미호</span>였으나, 인간들에게 멸시받고 쫓겨났던 과거의 트라우마를 딛고 피나는 노력 끝에 스스로 신격을 쟁취한 야망가. 그 과정에서 <span class="em-night">'품위'와 '격식'에 대한 병적인 집착</span>이 생겼다. 자신의 신사 구역이 1mm라도 더러워지거나, 누군가 자신의 완벽한 외형에 흠집을 내려 하면 이성을 잃고 맹독성 잔소리를 퍼붓는다.
+        </p>
+      </div>
+
+      <div class="modal-section">
+        <h4>특징 <small>TRAITS</small></h4>
+        <p>
+          생활력 하나는 기가 막힌다. 신사 운영은 물론, 최고급 찻잔에 어울리는 가이세키 요리까지 가능한, 일종의 <span class="em-day">'우렁각시' 기질</span>을 보유하고 있다. 다만, 그 모든 행동의 기저에는 <span class="em-night">'내가 이 구역의 주신이다'</span>라는 오만한 자부심이 깔려있다. 기분이 좋으면 저도 모르게 은빛 꼬리 아홉 개가 붕붕거리며 감정을 노출하는데, 본인은 이를 필사적으로 숨기려 한다. 스트레스가 쌓이면 털이 빠지는 치명적인 단점이 있다.
+        </p>
+      </div>
+
+      <div class="modal-section">
+        <h4>핵심 모순 <small>PARADOX</small></h4>
+        <div class="modal-paradox">
+          <p>요괴 출신이라는 콤플렉스 때문에 누구보다 '신답게' 보이려 하지만, 그 강박적인 모습이야말로 <span class="em-night">가장 인간적으로 보인다</span>는 점.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 2. 스사노오 미코토 모달 -->
+<div class="char-modal" id="modal-susano">
+  <div class="char-modal-inner">
+    <button class="modal-close" data-close>✕</button>
+
+    <div class="modal-portrait" data-c="susano">
+      <div class="modal-portrait-img">
+        <img src="assets/images/characters/susano-full.webp"
+             alt="스사노오 미코토 전신"
+             class="modal-full-img">
+      </div>
+      <div class="modal-portrait-info">
+        <div class="mi-jp">スサノオ ・ ノミコト</div>
+        <div class="mi-name">스사노오 미코토</div>
+        <div class="mi-name-kr">須佐之男命</div>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <div class="modal-id">№ 002 ・ 武神 ・ STORM GOD</div>
+      <h3 class="modal-title">스사노오 미코토</h3>
+      <p class="modal-role">— 폭풍·바다의 무신, 자칭 식객</p>
+
+      <div class="modal-oneliner">
+        <small>한 줄 요약 ・ ONE-LINER</small>
+        <p>모든 걸 다 해보고 현타 와서 드러누운, <span class="em-day">금수저 출신 만렙 백수</span>.</p>
+      </div>
+
+      <div class="modal-section">
+        <h4>프로필 <small>PROFILE</small></h4>
+        <p>
+          태초부터 존재했던 <span class="em-night">태고의 무신(武神)</span>, 폭풍과 바다의 신, 삼귀자 중 막내. 신계에서도 최상위 로열층에 속하는, 그야말로 <span class="em-day">'본투비' 신</span>. 한때는 인간들의 파괴적인 기원을 들어주며 수많은 전쟁터를 피로 물들였지만, 끝없는 피비린내와 맹목적인 신앙에 환멸을 느끼고 돌연 은퇴를 선언. 신사고 뭐고 다 내던지고 현재는 타마오의 신사에 뻔뻔하게 얹혀살며 '아무것도 안 하는 자유'를 만끽하는 중이다.
+        </p>
+      </div>
+
+      <div class="modal-section">
+        <h4>특징 <small>TRAITS</small></h4>
+        <p>
+          평소에는 <span class="em-day">파칭코나 경마</span>에 돈을 날리고, 툇마루에 누워 만화책을 보며 뒹굴거리는 게으른 한량 그 자체다. 하지만 모든 것을 겪어본 자의 꿰뚫어 보는 통찰력은 숨기고 있어, 귀찮다는 이유로 모르는 척할 뿐 상황의 본질을 정확히 파악하고 있다. 그가 진심으로 분노하면 주변 날씨가 태풍으로 변하는 등, <span class="em-night">세계관 최강자급의 편린</span>이 드러나곤 한다.
+        </p>
+      </div>
+
+      <div class="modal-section">
+        <h4>핵심 모순 <small>PARADOX</small></h4>
+        <div class="modal-paradox">
+          <p>가장 신성한 혈통을 가졌으면서 가장 속물적이고 게으르게 살고 있으며, 모든 걸 포기한 듯 보이지만 실은 누구보다 <span class="em-night">삶의 '안식'을 갈망</span>하고 있다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 3. 야마타 오로치 모달 -->
+<div class="char-modal" id="modal-orochi">
+  <div class="char-modal-inner">
+    <button class="modal-close" data-close>✕</button>
+
+    <div class="modal-portrait" data-c="orochi">
+      <div class="modal-portrait-img">
+        <img src="assets/images/characters/orochi-full.webp"
+             alt="야마타 오로치 전신"
+             class="modal-full-img">
+      </div>
+      <div class="modal-portrait-info">
+        <div class="mi-jp">やまた ・ おろち</div>
+        <div class="mi-name">야마타 오로치</div>
+        <div class="mi-name-kr">八岐大蛇</div>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <div class="modal-id">№ 003 ・ 使者 ・ MESSENGER</div>
+      <h3 class="modal-title">야마타 오로치</h3>
+      <p class="modal-role">— 뱀요괴 출신 신령, 스사노오의 사자</p>
+
+      <div class="modal-oneliner">
+        <small>한 줄 요약 ・ ONE-LINER</small>
+        <p>방탕한 주군 때문에 고통받는, <span class="em-night">비서 겸 살림꾼 겸 잔소리꾼</span>.</p>
+      </div>
+
+      <div class="modal-section">
+        <h4>프로필 <small>PROFILE</small></h4>
+        <p>
+          과거 스사노오에게 토벌당한 <span class="em-night">전설적인 대요괴 야마타노오로치</span>. 죽기 직전 스사노오와 억지로 사자 계약을 맺고 목숨을 부지했다. 주군을 모시는 입장이지만, 정작 주군인 스사노오가 워낙 방탕한 한량이라 오히려 그 뒷바라지를 도맡아 하는 처지다. <span class="em-day">스사노오가 파칭코에서 날린 돈을 가계부에서 메꾸고</span>, 그의 건강을 챙기기 위해 영양소에 집착하는 등, 사실상 주객이 전도된 관계다.
+        </p>
+      </div>
+
+      <div class="modal-section">
+        <h4>특징 <small>TRAITS</small></h4>
+        <p>
+          감정 표현이 극도로 서툰 과묵한 성격이지만, 행동 하나하나에 다정함과 배려가 묻어나는 <span class="em-day">대형견 타입</span>. 청소, 가계부 정리 등 신사의 모든 실무를 완벽하게 처리하지만, 요리만큼은 '영양소'에만 집착한 나머지 <span class="em-night">기괴한 보양식</span>을 연성하는 단점이 있다. 말없이 나타나 필요한 것을 챙겨주고 사라지는 등, 말보다 행동으로 모든 것을 보여준다.
+        </p>
+      </div>
+
+      <div class="modal-section">
+        <h4>핵심 모순 <small>PARADOX</small></h4>
+        <div class="modal-paradox">
+          <p>본래 파괴적인 대요괴였으나, 지금은 낭비와 비효율을 혐오하며 <span class="em-day">마트 타임세일 전단지를 스크랩하는</span>, 누구보다 생활 밀착형 캐릭터가 되었다는 점.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============= 푸터 ============= -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <h3>玉夜稲荷神社</h3>
+      <small>TAMAYO INARI SHRINE</small>
+      <p>도쿄도 세타가야구 토도로키계곡 근처 언덕에 위치한, 이승과 은세의 경계를 봉인하는 작은 신사.</p>
+    </div>
+    <div class="footer-col">
+      <h4>境內</h4>
+      <ul>
+        <li><a href="#hero">緣起</a></li>
+        <li><a href="#characters">登場神</a></li>
+        <li><a href="#shrine">神社</a></li>
+        <li><a href="#world">世界觀</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>御守</h4>
+      <ul>
+        <li><a href="#">액막이 부적</a></li>
+        <li><a href="#">연애성취 부적</a></li>
+        <li><a href="#">여우 키링</a></li>
+        <li><a href="#">에마 (絵馬)</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>お知らせ</h4>
+      <ul>
+        <li><a href="#">신사 부흥 일지</a></li>
+        <li><a href="#">SNS 公式</a></li>
+        <li><a href="#">신재대제 안내</a></li>
+        <li><a href="#">참배 시간</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 ・ 玉夜稲荷</span>
+    <span>BOUNDARY · SHRINE · OCCULT</span>
+  </div>
+</footer>
+
+<!-- 플로팅 BGM 컨트롤 -->
+<div class="bgm-control muted" id="bgmControl">
+  <span class="dot"></span>
+  <span id="bgmLabel">音 ・ MUTED</span>
+  <button id="bgmToggle" aria-label="음악 켜기/끄기">▶</button>
+</div>
+<!-- BGM 선택 메뉴 (꺼져있을 때 라벨 클릭하면 펼쳐짐) -->
+<div class="bgm-menu" id="bgmMenu">
+  <button class="bgm-menu-btn" data-bgm="day">
+    <span class="ico">☀</span>
+    <span>晝<small>DAY THEME</small></span>
+  </button>
+  <button class="bgm-menu-btn" data-bgm="night">
+    <span class="ico">☾</span>
+    <span>夜<small>NIGHT THEME</small></span>
+  </button>
+  <button class="bgm-menu-btn" data-bgm="off">
+    <span class="ico">✕</span>
+    <span>無音<small>SILENT</small></span>
+  </button>
+</div>
+
+<script>
+/* ===== 커스텀 커서 ===== */
+const cursor = document.getElementById('cursorMain');
+const trail = document.getElementById('cursorTrail');
+let mouseX=0, mouseY=0, trailX=0, trailY=0;
+
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX; mouseY = e.clientY;
+  cursor.style.left = mouseX + 'px';
+  cursor.style.top = mouseY + 'px';
+});
+function animTrail(){
+  trailX += (mouseX - trailX) * 0.18;
+  trailY += (mouseY - trailY) * 0.18;
+  trail.style.left = trailX + 'px';
+  trail.style.top = trailY + 'px';
+  requestAnimationFrame(animTrail);
+}
+animTrail();
+
+document.querySelectorAll('a, button, .char-card, .world-card, .map-pin, .pin-guide-item, .lore-card').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+});
+
+/* ===== 클릭 리플 ===== */
+document.addEventListener('click', (e) => {
+  const r = document.createElement('div');
+  r.className = 'click-ripple';
+  r.style.left = e.clientX + 'px';
+  r.style.top = e.clientY + 'px';
+  document.body.appendChild(r);
+  setTimeout(() => r.remove(), 800);
+});
+
+/* ===== 로딩 → 메인 ===== */
+const loader = document.getElementById('loader');
+const enterBtn = document.getElementById('enterBtn');
+const bgmBtns = document.querySelectorAll('.bgm-btn');
+const bgmControl = document.getElementById('bgmControl');
+const bgmLabel = document.getElementById('bgmLabel');
+let chosenBgm = null;
+
+bgmBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    bgmBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    chosenBgm = btn.dataset.bgm;
+  });
+});
+enterBtn.addEventListener('click', () => {
+  loader.classList.add('hidden');
+  if (chosenBgm && chosenBgm !== 'off') {
+    // 사용자가 BGM을 선택한 경우: muted 클래스 제거 → 정상 표시
+    bgmControl.classList.remove('muted');
+    bgmLabel.textContent = chosenBgm === 'day' ? '晝 ・ DAY THEME' : '夜 ・ NIGHT THEME';
+    document.getElementById('bgmToggle').textContent = '⏸';
+    if (chosenBgm === 'night') {
+      document.body.classList.add('night');
+      document.querySelectorAll('.dn-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('.dn-btn[data-mode="night"]').classList.add('active');
+    }
+  }
+  // BGM 선택 안 했거나 무음 선택했으면: muted 상태 유지 (이미 HTML에 muted 클래스 있음)
+});
+
+/* ===== 낮/밤 토글 ===== */
+const dnBtns = document.querySelectorAll('.dn-btn');
+dnBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    dnBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    if (btn.dataset.mode === 'night') {
+      document.body.classList.add('night');
+      if (!bgmControl.classList.contains('muted')) bgmLabel.textContent = '夜 ・ NIGHT THEME';
+    } else {
+      document.body.classList.remove('night');
+      if (!bgmControl.classList.contains('muted')) bgmLabel.textContent = '晝 ・ DAY THEME';
+    }
+  });
+});
+
+/* ===== BGM 컨트롤 — 메뉴 펼침 + 선택 ===== */
+const bgmMenu = document.getElementById('bgmMenu');
+const bgmMenuBtns = document.querySelectorAll('.bgm-menu-btn');
+
+// 라벨 클릭 → 메뉴 펼침 (음악이 꺼진 상태일 때만 메뉴를 열어 새로 선택)
+bgmLabel.addEventListener('click', (e) => {
+  e.stopPropagation();
+  if (bgmControl.classList.contains('muted')) {
+    bgmMenu.classList.toggle('show');
+  }
+});
+
+// 메뉴 외부 클릭 시 닫기
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.bgm-menu') && !e.target.closest('.bgm-control')) {
+    bgmMenu.classList.remove('show');
+  }
+});
+
+// 메뉴에서 음악 선택
+bgmMenuBtns.forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const choice = btn.dataset.bgm;
+    bgmMenu.classList.remove('show');
+    chosenBgm = choice;
+
+    if (choice === 'off') {
+      // 무음 — 음악 멈추고 muted 표시
+      if (typeof bgmDay !== 'undefined') bgmDay.pause();
+      if (typeof bgmNight !== 'undefined') bgmNight.pause();
+      bgmControl.classList.add('muted');
+      bgmLabel.textContent = '音 ・ MUTED';
+      document.getElementById('bgmToggle').textContent = '▶';
+      currentBgm = null;
+    } else {
+      // 낮 / 밤 — 재생
+      bgmControl.classList.remove('muted');
+      bgmLabel.textContent = choice === 'day' ? '晝 ・ DAY THEME' : '夜 ・ NIGHT THEME';
+      document.getElementById('bgmToggle').textContent = '⏸';
+      if (typeof bgmDay !== 'undefined' && typeof bgmNight !== 'undefined') {
+        if (choice === 'day') {
+          bgmNight.pause();
+          bgmDay.play().catch(() => {});
+          currentBgm = bgmDay;
+        } else {
+          bgmDay.pause();
+          bgmNight.play().catch(() => {});
+          currentBgm = bgmNight;
+        }
+      }
+    }
+  });
+});
+
+/* ===== 부드러운 스크롤 ===== */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', (e) => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({behavior:'smooth'});
+  });
+});
+
+/* ===== 캐릭터 카드 3D 틸트 ===== */
+document.querySelectorAll('.char-card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const cx = rect.width / 2;
+    const cy = rect.height / 2;
+    const rotY = ((x - cx) / cx) * 8;
+    const rotX = ((cy - y) / cy) * 8;
+    card.style.setProperty('--tilt-x', rotX + 'deg');
+    card.style.setProperty('--tilt-y', rotY + 'deg');
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.setProperty('--tilt-x', '0deg');
+    card.style.setProperty('--tilt-y', '0deg');
+  });
+});
+
+/* ===== 스크롤 등장 ===== */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
+}, {threshold:0.15});
+document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => io.observe(el));
+
+/* ===== 패럴럭스 한자 ===== */
+const kanji = document.getElementById('kanjiDeco');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  if (kanji) kanji.style.transform = `translateY(${y * 0.3}px)`;
+});
+
+/* ===== 캐릭터 상세 모달 ===== */
+const charModals = document.querySelectorAll('.char-modal');
+
+function openCharModal(charKey){
+  const modal = document.getElementById('modal-' + charKey);
+  if (!modal) return;
+  modal.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeAllCharModals(){
+  charModals.forEach(m => m.classList.remove('show'));
+  document.body.style.overflow = '';
+}
+
+// 카드 클릭 → 모달 열기
+document.querySelectorAll('.char-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const key = card.dataset.c;
+    if (key) openCharModal(key);
+  });
+});
+
+// 닫기 버튼
+document.querySelectorAll('.char-modal [data-close]').forEach(btn => {
+  btn.addEventListener('click', closeAllCharModals);
+});
+
+// 모달 배경(오버레이) 클릭 → 닫기
+charModals.forEach(modal => {
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeAllCharModals();
+  });
+});
+
+// ESC 키 → 닫기
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeAllCharModals();
+});
+
+/* ===== 인터랙티브 경내 지도 ===== */
+const mapPins = document.querySelectorAll('.map-pin');
+const popupCloses = document.querySelectorAll('.popup-close');
+
+function closeAllMapPopups(){
+  mapPins.forEach(p => {
+    p.classList.remove('active');
+    const popup = p.querySelector('.map-popup');
+    if (popup) popup.classList.remove('show');
+  });
+}
+
+mapPins.forEach(pin => {
+  pin.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const wasActive = pin.classList.contains('active');
+    closeAllMapPopups();
+    if (!wasActive) {
+      pin.classList.add('active');
+      pin.querySelector('.map-popup').classList.add('show');
+    }
+  });
+});
+
+popupCloses.forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeAllMapPopups();
+  });
+});
+
+// 팝업 내부 클릭은 안 닫히게
+document.querySelectorAll('.map-popup').forEach(p => {
+  p.addEventListener('click', e => e.stopPropagation());
+});
+
+// 외부 클릭 시 닫기
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.map-pin') && !e.target.closest('.pin-guide-item')) {
+    closeAllMapPopups();
+  }
+});
+
+// 핀 가이드 클릭 → 해당 핀 팝업 열기
+document.querySelectorAll('.pin-guide-item').forEach(item => {
+  item.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const num = item.dataset.jump;
+    const pin = document.querySelector(`.map-pin[data-pin="${num}"]`);
+    closeAllMapPopups();
+    if (pin) {
+      pin.classList.add('active');
+      pin.querySelector('.map-popup').classList.add('show');
+    }
+  });
+});
+
+/* ===== BGM 재생 컨트롤 ===== */
+const bgmDay = document.getElementById('bgmDay');
+const bgmNight = document.getElementById('bgmNight');
+let currentBgm = null;
+
+if (bgmDay && bgmNight) {
+  bgmDay.volume = 0.3;
+  bgmNight.volume = 0.3;
+
+  // 로딩화면에서 BGM 선택 후 입장 시 재생
+  enterBtn.addEventListener('click', () => {
+    if (chosenBgm === 'day') { bgmDay.play().catch(()=>{}); currentBgm = bgmDay; }
+    else if (chosenBgm === 'night') { bgmNight.play().catch(()=>{}); currentBgm = bgmNight; }
+  });
+
+  // 낮/밤 토글에 따른 자동 BGM 전환
+  dnBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (!currentBgm) return;
+      const wasPlaying = currentBgm && !currentBgm.paused;
+      if (btn.dataset.mode === 'night') {
+        bgmDay.pause();
+        if (wasPlaying) {
+          bgmNight.play().catch(()=>{});
+          bgmLabel.textContent = '夜 ・ NIGHT THEME';
+        }
+        currentBgm = bgmNight;
+      } else {
+        bgmNight.pause();
+        if (wasPlaying) {
+          bgmDay.play().catch(()=>{});
+          bgmLabel.textContent = '晝 ・ DAY THEME';
+        }
+        currentBgm = bgmDay;
+      }
+    });
+  });
+
+  // 우하단 ▶/⏸ 버튼 — 음악이 재생 중일 때 일시정지/재생 토글
+  document.getElementById('bgmToggle').addEventListener('click', (e) => {
+    e.stopPropagation();
+    // 음악이 꺼진(muted) 상태면 — 라벨 클릭과 동일하게 메뉴 열기
+    if (bgmControl.classList.contains('muted')) {
+      bgmMenu.classList.toggle('show');
+      return;
+    }
+    // 음악이 선택된 상태면 일시정지/재생 토글
+    if (!currentBgm) return;
+    if (currentBgm.paused) {
+      currentBgm.play().catch(()=>{});
+      e.target.textContent = '⏸';
+    } else {
+      currentBgm.pause();
+      e.target.textContent = '▶';
+    }
+  });
+}
+
+</script>
+</body>
+</html>
